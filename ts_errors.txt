@@ -1,0 +1,16 @@
+resources/js/components/conversation-volume-chart.tsx(226,7): error TS2322: Type '{ children: Element; "aria-label": string; className: string; size: string; }' is not assignable to type 'IntrinsicAttributes & Omit<SelectTriggerProps & RefAttributes<HTMLButtonElement>, "ref"> & RefAttributes<...>'.
+  Property 'size' does not exist on type 'IntrinsicAttributes & Omit<SelectTriggerProps & RefAttributes<HTMLButtonElement>, "ref"> & RefAttributes<...>'.
+resources/js/components/first-reply-time-chart.tsx(103,21): error TS7006: Parameter 'label' implicitly has an 'any' type.
+resources/js/components/latest-change.tsx(48,5): error TS2322: Type '"icon-sm"' is not assignable to type '"default" | "sm" | "lg" | "icon" | null | undefined'.
+resources/js/components/nav-user.tsx(64,7): error TS2322: Type '{ children: Element; className: string; variant: string; asChild: true; }' is not assignable to type 'IntrinsicAttributes & Omit<DropdownMenuItemProps & RefAttributes<HTMLDivElement>, "ref"> & { ...; } & RefAttributes<...>'.
+  Property 'variant' does not exist on type 'IntrinsicAttributes & Omit<DropdownMenuItemProps & RefAttributes<HTMLDivElement>, "ref"> & { ...; } & RefAttributes<...>'.
+resources/js/components/team-on-duty.tsx(120,11): error TS2322: Type '"icon-xs"' is not assignable to type '"default" | "sm" | "lg" | "icon" | null | undefined'.
+resources/js/layouts/app/app-header-layout.tsx(14,24): error TS2322: Type '{ breadcrumbs: BreadcrumbItem[] | undefined; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'breadcrumbs' does not exist on type 'IntrinsicAttributes'.
+resources/js/pages/Pekerja/Dashboard.tsx(6,10): error TS2305: Module '"@/components/first-reply-time-chart"' has no exported member 'FirstReplyTimeChart'.
+resources/js/pages/PetugasRam/Dashboard.tsx(7,10): error TS2305: Module '"@/components/csat-responses-chart"' has no exported member 'CsatResponsesChart'.
+resources/js/pages/auth/register.tsx(20,72): error TS2344: Type 'RegisterForm' does not satisfy the constraint 'FormDataType'.
+  Index signature for type 'string' is missing in type 'RegisterForm'.
+resources/js/pages/auth/reset-password.tsx(24,72): error TS2344: Type 'ResetPasswordForm' does not satisfy the constraint 'FormDataType'.
+  Index signature for type 'string' is missing in type 'ResetPasswordForm'.
+resources/js/pages/welcome.tsx(221,46): error TS2322: Type '"plus-darker"' is not assignable to type 'MixBlendMode | undefined'.

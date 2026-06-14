@@ -8,13 +8,26 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('welcome');
-})->name('home');
+    return Inertia::render('auth/login');
+})->middleware('guest')->name('home');
 
 Route::middleware(['auth'])->group(function () {
+    // We will keep a generic fallback dashboard route just in case
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+
+    Route::get('pemilik/dashboard', function () {
+        return Inertia::render('Pemilik/Dashboard');
+    })->name('pemilik.dashboard');
+
+    Route::get('pekerja/dashboard', function () {
+        return Inertia::render('Pekerja/Dashboard');
+    })->name('pekerja.dashboard');
+
+    Route::get('petugas-ram/dashboard', function () {
+        return Inertia::render('PetugasRam/Dashboard');
+    })->name('petugas_ram.dashboard');
 });
 
 // Route Pemilik

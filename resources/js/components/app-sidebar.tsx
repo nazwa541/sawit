@@ -1,56 +1,62 @@
-import { NavFooter } from '@/components/nav-footer';
-import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
-import AppLogo from './app-logo';
+import { Link, usePage } from '@inertiajs/react';
+import type { SharedData } from '@/types';
+import { LogoIcon } from "@/components/logo";
+import { Button } from "@/components/ui/button";
+import {
+	Sidebar,
+	SidebarContent,
+	SidebarFooter,
+	SidebarGroup,
+	SidebarHeader,
+	SidebarMenu,
+	SidebarMenuButton,
+	SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { NavGroup } from "@/components/nav-group";
+import { footerNavLinks, getNavGroups } from "@/components/app-shared";
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        url: '/dashboard',
-        icon: LayoutGrid,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        url: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        url: 'https://laravel.com/docs/starter-kits',
-        icon: BookOpen,
-    },
-];
+import { PlusIcon, SearchIcon } from "lucide-react";
 
 export function AppSidebar() {
-    return (
-        <Sidebar collapsible="icon" variant="inset">
-            <SidebarHeader>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton size="lg" asChild>
-                            <Link href="/dashboard" prefetch>
-                                <AppLogo />
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                </SidebarMenu>
-            </SidebarHeader>
+	const { auth } = usePage<SharedData>().props;
+	const role = auth.user?.role || 'pemilik';
+	const navGroups = getNavGroups(role);
 
-            <SidebarContent>
-                <NavMain items={mainNavItems} />
-            </SidebarContent>
+	return (
+		<Sidebar collapsible="icon" variant="inset">
+			<SidebarHeader className="h-14 justify-center">
+				<SidebarMenuButton asChild>
+					<Link href="/dashboard">
+						<LogoIcon />
+						<span className="font-medium text-[#65A30D] dark:text-green-400">SISTRA-SAWIT</span>
+					</Link>
+				</SidebarMenuButton>
+			</SidebarHeader>
+			<SidebarContent>
 
-            <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
-                <NavUser />
-            </SidebarFooter>
-        </Sidebar>
-    );
+				{navGroups.map((group, index) => (
+					<NavGroup key={`sidebar-group-${index}`} {...group} />
+				))}
+			</SidebarContent>
+			<SidebarFooter>
+				<SidebarMenu className="mt-2">
+					{footerNavLinks.map((item) => (
+						<SidebarMenuItem key={item.title}>
+							<SidebarMenuButton
+								asChild
+								className="text-muted-foreground"
+								isActive={item.isActive}
+								size="sm"
+							>
+								<Link href={item.path || '#'}>
+									{item.icon}
+									<span>{item.title}</span>
+								</Link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					))}
+				</SidebarMenu>
+			</SidebarFooter>
+		</Sidebar>
+	);
 }

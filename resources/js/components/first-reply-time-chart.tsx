@@ -53,7 +53,7 @@ export function TruckQueueChart({
 }: ComponentProps<typeof Card>) {
 	return (
 		<Card
-			className={cn("shadow-sm hover:shadow-md transition-all duration-200 border-border rounded-[20px] bg-card", className)}
+			className={cn("md:col-span-2 lg:col-span-2 shadow-sm hover:shadow-md transition-all duration-200 border-border rounded-[20px] bg-card", className)}
 			{...props}
 		>
 			<CardHeader className="space-y-1">
@@ -69,7 +69,7 @@ export function TruckQueueChart({
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<ChartContainer className="h-[300px] w-full" config={chartConfig}>
+				<ChartContainer className="aspect-auto h-[300px] w-full" config={chartConfig}>
 					<AreaChart
 						accessibilityLayer
 						data={chartRows}

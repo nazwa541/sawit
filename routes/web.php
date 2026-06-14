@@ -12,38 +12,26 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
-
-    Route::get('pemilik/dashboard', function () {
-        return Inertia::render('Pemilik/Dashboard');
-    })->name('pemilik.dashboard');
-
-    Route::get('pekerja/dashboard', function () {
-        return Inertia::render('Pekerja/Dashboard');
-    })->name('pekerja.dashboard');
-
-    Route::get('petugas-ram/dashboard', function () {
-        return Inertia::render('PetugasRam/Dashboard');
-    })->name('petugas_ram.dashboard');
 });
 
 // Route Pemilik
 Route::middleware(['auth', 'role:pemilik'])
     ->get('/dashboard-pemilik', function () {
-        return 'Dashboard Pemilik';
+        return Inertia::render('Pemilik/Dashboard');
     })->name("dashboard.pemilik");
 
 
 // Route Pekerja
 Route::middleware(['auth', 'role:pekerja'])
     ->get('/dashboard-pekerja', function () {
-        return 'Dashboard Pekerja';
+        return Inertia::render('Pekerja/Dashboard');
     })->name("dashboard.pekerja");
 
 
 // Route Petugas RAM
 Route::middleware(['auth', 'role:petugas_ram'])
     ->get('/dashboard-ram', function () {
-        return 'Dashboard Petugas RAM';
+        return Inertia::render('PetugasRam/Dashboard');
     })->name("dashboard.ram");
 
 require __DIR__ . '/settings.php';

@@ -20,7 +20,7 @@ const pemilikNavGroups: SidebarNavGroup[] = [
 		items: [
 			{
 				title: "Dashboard",
-				path: "/pemilik/dashboard",
+				path: "/dashboard-pemilik",
 				icon: <LayoutGridIcon />,
 				isActive: true,
 			},
@@ -86,7 +86,7 @@ const pekerjaNavGroups: SidebarNavGroup[] = [
 		items: [
 			{
 				title: "Dashboard",
-				path: "/pekerja/dashboard",
+				path: "/dashboard-pekerja",
 				icon: <LayoutGridIcon />,
 				isActive: true,
 			},
@@ -115,7 +115,7 @@ const petugasRamNavGroups: SidebarNavGroup[] = [
 		items: [
 			{
 				title: "Dashboard",
-				path: "/petugas-ram/dashboard",
+				path: "/dashboard-ram",
 				icon: <LayoutGridIcon />,
 				isActive: true,
 			},

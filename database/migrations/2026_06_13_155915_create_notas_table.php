@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('pengiriman_id')
-                ->constrained('pengirimen')
+                ->constrained('pengiriman')
                 ->cascadeOnDelete();
 
             $table->foreignId('petugas_id')

@@ -11,17 +11,17 @@ class LahanSeeder extends Seeder
     {
         Lahan::insert([
             [
-                'nama_blok' => 'A1',
-                'luas_ha' => 5.50,
+                'nama_blok' => 'Blok A1',
+                'luas_ha' => 5.5,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nama_blok' => 'B1',
-                'luas_ha' => 8.25,
+                'nama_blok' => 'Blok B1',
+                'luas_ha' => 8.2,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
         ]);
     }
 }

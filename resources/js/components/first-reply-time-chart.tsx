@@ -53,7 +53,7 @@ export function TruckQueueChart({
 }: ComponentProps<typeof Card>) {
 	return (
 		<Card
-			className={cn("md:col-span-2 lg:col-span-2 shadow-sm hover:shadow-md transition-all duration-200 border-border rounded-[20px] bg-card", className)}
+			className={cn("shadow-sm hover:shadow-md transition-all duration-200 border-border rounded-[20px] bg-card", className)}
 			{...props}
 		>
 			<CardHeader className="space-y-1">

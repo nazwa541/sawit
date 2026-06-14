@@ -1,36 +1,76 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
-import { UserInfo } from '@/components/user-info';
-import { UserMenuContent } from '@/components/user-menu-content';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { type SharedData } from '@/types';
-import { usePage } from '@inertiajs/react';
-import { ChevronsUpDown } from 'lucide-react';
+"use client";
+
+import { Link, usePage } from '@inertiajs/react';
+import type { SharedData } from '@/types';
+
+import {
+	Avatar,
+	AvatarFallback,
+	AvatarImage,
+} from "@/components/ui/avatar";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuGroup,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { UserIcon, LogOutIcon } from "lucide-react";
 
 export function NavUser() {
-    const { auth } = usePage<SharedData>().props;
-    const { state } = useSidebar();
-    const isMobile = useIsMobile();
+	const { auth } = usePage<SharedData>().props;
+	const user = auth.user;
+    // Fallback avatar if no actual avatar
+    const avatar = user.avatar || `https://avatar.vercel.sh/${user.name.replace(/\s+/g, '')}`;
+	return (
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Avatar className="size-8">
+					<AvatarImage src={avatar} />
+					<AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+				</Avatar>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="end" className="w-60">
+				<DropdownMenuItem className="flex items-center justify-start gap-2">
+					<DropdownMenuLabel className="flex items-center gap-3">
+						<Avatar className="size-10">
+							<AvatarImage src={avatar} />
+							<AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+						</Avatar>
+						<div>
+							<span className="font-medium text-foreground">{user.name}</span>{" "}
+							<br />
+							<div className="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-muted-foreground text-xs">
+								{user.email}
+							</div>
+						</div>
+					</DropdownMenuLabel>
+				</DropdownMenuItem>
+				<DropdownMenuSeparator />
+				<DropdownMenuGroup>
+					<DropdownMenuItem asChild>
+                        <Link href="/settings/profile" className="w-full cursor-pointer">
+						    <UserIcon />
+						    Profil
+                        </Link>
+					</DropdownMenuItem>
+				</DropdownMenuGroup>
 
-    return (
-        <SidebarMenu>
-            <SidebarMenuItem>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <SidebarMenuButton size="lg" className="text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent group">
-                            <UserInfo user={auth.user} />
-                            <ChevronsUpDown className="ml-auto size-4" />
-                        </SidebarMenuButton>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                        className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-                        align="end"
-                        side={isMobile ? 'bottom' : state === 'collapsed' ? 'left' : 'bottom'}
-                    >
-                        <UserMenuContent user={auth.user} />
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </SidebarMenuItem>
-        </SidebarMenu>
-    );
+				<DropdownMenuGroup>
+					<DropdownMenuItem
+						className="w-full cursor-pointer"
+						variant="destructive"
+                        asChild
+					>
+                        <Link href="/logout" method="post" as="button" className="w-full cursor-pointer">
+						    <LogOutIcon />
+						    Keluar
+                        </Link>
+					</DropdownMenuItem>
+				</DropdownMenuGroup>
+			</DropdownMenuContent>
+		</DropdownMenu>
+	);
 }

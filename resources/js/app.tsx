@@ -8,6 +8,8 @@ import { initializeTheme } from './hooks/use-appearance';
 import axios from 'axios';
 window.axios = axios;
 
+// Tambahkan ini
+window.axios.defaults.baseURL = 'http://localhost:8000';
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 declare global {

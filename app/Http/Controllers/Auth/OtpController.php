@@ -7,10 +7,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;  // ← TAMBAH INI
+use Illuminate\Support\Facades\Log;   // ← TAMBAH INI
 
 class OtpController extends Controller
 {
-    // Kirim OTP via Fonnte
     public function sendOtp(Request $request)
     {
         $request->validate([
@@ -18,13 +19,11 @@ class OtpController extends Controller
         ]);
 
         $phone = $this->formatPhone($request->phone);
-        $otp   = rand(100000, 999999); // 6 digit
+        $otp   = rand(100000, 999999);
 
-        // Simpan OTP di cache, expire 5 menit
         Cache::put("otp_{$phone}", $otp, now()->addMinutes(5));
 
-        // Kirim via Fonnte
-        $response = \Http::withHeaders([
+        $response = Http::withHeaders([   // ← bukan \Http::
             'Authorization' => env('FONNTE_TOKEN'),
         ])->post('https://api.fonnte.com/send', [
             'target'  => $phone,
@@ -38,25 +37,36 @@ class OtpController extends Controller
         return response()->json(['message' => 'OTP berhasil dikirim ke WhatsApp Anda.']);
     }
 
-    // Verifikasi OTP
     public function verifyOtp(Request $request)
     {
         $request->validate([
             'phone' => 'required|string',
-            'otp'   => 'required|digits:6',
+            'otp'   => 'required',
         ]);
 
-        $phone      = $this->formatPhone($request->phone);
-        $cachedOtp  = Cache::get("otp_{$phone}");
+        $phone     = $this->formatPhone($request->phone);
+        $cachedOtp = Cache::get("otp_{$phone}");
+
+        Log::info('Verify OTP Debug', [   // ← bukan \Log::
+            'input_phone'  => $request->phone,
+            'format_phone' => $phone,
+            'input_otp'    => $request->otp,
+            'cached_otp'   => $cachedOtp,
+        ]);
 
         if (!$cachedOtp || $cachedOtp != $request->otp) {
-            return response()->json(['error' => 'OTP tidak valid atau sudah kadaluarsa.'], 422);
+            return response()->json([
+                'error' => 'OTP tidak valid atau sudah kadaluarsa.',
+                'debug' => [
+                    'cached' => $cachedOtp,
+                    'input'  => $request->otp,
+                    'phone'  => $phone,
+                ]
+            ], 422);
         }
 
-        // Hapus OTP setelah berhasil
         Cache::forget("otp_{$phone}");
 
-        // Login atau register user
         $user = User::firstOrCreate(
             ['phone' => $phone],
             [
@@ -73,10 +83,9 @@ class OtpController extends Controller
         ]);
     }
 
-    // Format nomor ke format internasional
     private function formatPhone(string $phone): string
     {
-        $phone = preg_replace('/\D/', '', $phone); // hapus non-angka
+        $phone = preg_replace('/\D/', '', $phone);
 
         if (str_starts_with($phone, '0')) {
             $phone = '62' . substr($phone, 1);

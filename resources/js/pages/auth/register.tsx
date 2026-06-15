@@ -1,4 +1,5 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import WhatsAppOtpForm from '@/Components/WhatsAppOtpForm';
 import { Eye, EyeOff, LoaderCircle } from 'lucide-react';
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
@@ -762,9 +763,11 @@ export default function Register() {
                                         d="M43.611 20.083H42V20H24v8h11.303c-1.125 3.188-3.561 5.705-6.894 7.57l6.19 5.238C38.269 37.404 44 31.252 44 24c0-1.341-.138-2.65-.389-3.917z"
                                     />
                                 </svg>
-                                Masuk dengan Google
+                                Daftar dengan Google
                             </a>
                         </div>
+
+                        <WhatsAppOtpForm />
 
                         <Button
                             type="submit"

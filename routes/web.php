@@ -109,5 +109,8 @@ Route::post('/auth/otp/send',   [OtpController::class, 'sendOtp'])
 Route::post('/auth/otp/verify', [OtpController::class, 'verifyOtp'])
     ->name('otp.verify');
 
+Route::post('/auth/otp/complete', [OtpController::class, 'completeProfile'])
+    ->name('otp.complete');
+
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';

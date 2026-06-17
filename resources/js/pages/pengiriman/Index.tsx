@@ -3,7 +3,7 @@ import AppHeaderLayout from '@/layouts/app/app-header-layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { PlusIcon, EditIcon, TrashIcon, CameraIcon, ScaleIcon, EyeIcon } from 'lucide-react';
+import { PlusIcon, EditIcon, TrashIcon, CameraIcon, ScaleIcon, EyeIcon, SearchIcon } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import {
     AlertDialog,
@@ -17,7 +17,9 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { toast } from 'sonner';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 
 interface Pengiriman {
@@ -36,6 +38,21 @@ export default function PengirimanIndex({ pengiriman }: { pengiriman: Pengiriman
     const isPekerja = auth.user.role === 'pekerja';
     const isPemilik = auth.user.role === 'pemilik';
 
+    const [searchQuery, setSearchQuery] = useState('');
+    const [statusFilter, setStatusFilter] = useState('semua');
+
+    const filteredPengiriman = pengiriman.filter(item => {
+        const searchStr = searchQuery.toLowerCase();
+        const matchesSearch =
+            item.mobil?.plat_nomor?.toLowerCase().includes(searchStr) ||
+            item.pekerja?.name?.toLowerCase().includes(searchStr) ||
+            item.lahan?.nama_blok?.toLowerCase().includes(searchStr);
+
+        const matchesStatus = statusFilter === 'semua' || item.status === statusFilter;
+
+        return matchesSearch && matchesStatus;
+    });
+
     const handleDelete = (id: number) => {
         router.delete(`/pengiriman/${id}`);
     };
@@ -51,7 +68,7 @@ export default function PengirimanIndex({ pengiriman }: { pengiriman: Pengiriman
         switch (status?.toLowerCase()) {
             case 'perjalanan': return <Badge className="rounded-full border-none shadow-none bg-[#DBEAFE] text-[#1D4ED8] hover:bg-[#DBEAFE] dark:bg-blue-500/20 dark:text-blue-400 dark:hover:bg-blue-500/20">Perjalanan</Badge>;
             case 'menunggu_nota': return <Badge className="rounded-full border-none shadow-none whitespace-nowrap bg-[#FEF3C7] text-[#B45309] hover:bg-[#FEF3C7] dark:bg-amber-500/20 dark:text-amber-400 dark:hover:bg-amber-500/20">Nota</Badge>;
-            case 'selesai': return <Badge className="rounded-full border-none shadow-none bg-[#DCFCE7] text-[#15803D] hover:bg-[#DCFCE7] dark:bg-green-500/20 dark:text-green-400 dark:hover:bg-green-500/20">Selesai</Badge>;
+            case 'selesai': return <Badge className="rounded-full border-none shadow-none bg-[#FFE7E2] text-[#2B2E6B] hover:bg-[#FFE7E2] dark:bg-[#FF7E6B]/20 dark:text-[#FF9485] dark:hover:bg-[#FF7E6B]/20">Selesai</Badge>;
             default: return <Badge className="rounded-full border-none shadow-none">{status || '-'}</Badge>;
         }
     };
@@ -68,7 +85,7 @@ export default function PengirimanIndex({ pengiriman }: { pengiriman: Pengiriman
                         </p>
                     </div>
                     {isPekerja && (
-                        <Button asChild className="bg-[#65A30D] hover:bg-[#84CC16]">
+                        <Button asChild className="bg-[#FF7E6B] hover:bg-[#FF9485]">
                             <Link href="/pengiriman/create">
                                 <PlusIcon className="mr-2 h-4 w-4" />
                                 Lapor Keberangkatan
@@ -78,9 +95,34 @@ export default function PengirimanIndex({ pengiriman }: { pengiriman: Pengiriman
                 </div>
 
                 <Card className="rounded-[20px] shadow-sm">
-                    <CardHeader>
-                        <CardTitle>Daftar Pengiriman</CardTitle>
-                        <CardDescription>Menampilkan log perjalanan armada.</CardDescription>
+                    <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <CardTitle>Daftar Pengiriman</CardTitle>
+                            <CardDescription>Menampilkan log perjalanan armada.</CardDescription>
+                        </div>
+                        <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                            <div className="relative w-full sm:w-64">
+                                <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                    type="text"
+                                    placeholder="Cari plat, supir, atau blok..."
+                                    className="pl-9 h-9"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                            </div>
+                            <Select value={statusFilter} onValueChange={setStatusFilter}>
+                                <SelectTrigger className="h-9 w-full sm:w-[150px]">
+                                    <SelectValue placeholder="Semua Status" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="semua">Semua Status</SelectItem>
+                                    <SelectItem value="perjalanan">Perjalanan</SelectItem>
+                                    <SelectItem value="menunggu_nota">Menunggu Nota</SelectItem>
+                                    <SelectItem value="selesai">Selesai</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </CardHeader>
                     <CardContent>
                         <Table>
@@ -96,14 +138,14 @@ export default function PengirimanIndex({ pengiriman }: { pengiriman: Pengiriman
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {pengiriman.length === 0 ? (
+                                {filteredPengiriman.length === 0 ? (
                                     <TableRow>
                                         <TableCell colSpan={isPekerja ? 6 : 7} className="h-24 text-center">
-                                            Belum ada data pengiriman.
+                                            {pengiriman.length === 0 ? 'Belum ada data pengiriman.' : 'Data pengiriman tidak ditemukan.'}
                                         </TableCell>
                                     </TableRow>
                                 ) : (
-                                    pengiriman.map((item) => (
+                                    filteredPengiriman.map((item) => (
                                         <TableRow key={item.id}>
                                             <TableCell className="whitespace-nowrap">
                                                 {new Date(item.waktu_berangkat).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' })}
@@ -117,7 +159,7 @@ export default function PengirimanIndex({ pengiriman }: { pengiriman: Pengiriman
                                             <TableCell>{getStatusBadge(item.status)}</TableCell>
                                             <TableCell>
                                                 {item.berat_netto_kg ? (
-                                                    <span className="font-bold text-green-700">{item.berat_netto_kg.toLocaleString('id-ID')}</span>
+                                                    <span className="font-bold text-[#F0654F]">{item.berat_netto_kg.toLocaleString('id-ID')}</span>
                                                 ) : (
                                                     <span className="text-muted-foreground">-</span>
                                                 )}
@@ -142,7 +184,7 @@ export default function PengirimanIndex({ pengiriman }: { pengiriman: Pengiriman
 
                                                     {/* Tombol input berat untuk pekerja, hanya saat status perjalanan */}
                                                     {isPekerja && item.status === 'perjalanan' && (
-                                                        <Button asChild variant="outline" size="sm" className="h-8 border-[#65A30D]/40 text-[#65A30D] hover:bg-[#DCFCE7] hover:text-[#4D7C0F]" title="Input Berat Timbangan">
+                                                        <Button asChild variant="outline" size="sm" className="h-8 border-[#FF7E6B]/40 text-[#FF7E6B] hover:bg-[#FFE7E2] hover:text-[#F0654F]" title="Input Berat Timbangan">
                                                             <Link href={`/pengiriman/${item.id}/timbang`}>
                                                                 <ScaleIcon className="mr-1 h-3 w-3" />
                                                                 Input Berat

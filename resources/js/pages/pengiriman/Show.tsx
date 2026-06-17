@@ -28,7 +28,7 @@ interface Pengiriman {
 function statusBadgeStyle(status: string) {
     if (status === 'perjalanan')    return 'bg-[#DBEAFE] text-[#1D4ED8] dark:bg-blue-500/20 dark:text-blue-400';
     if (status === 'menunggu_nota') return 'bg-[#FEF3C7] text-[#B45309] dark:bg-amber-500/20 dark:text-amber-400';
-    if (status === 'selesai')       return 'bg-[#DCFCE7] text-[#15803D] dark:bg-green-500/20 dark:text-green-400';
+    if (status === 'selesai')       return 'bg-[#FFE7E2] text-[#2B2E6B] dark:bg-[#FF7E6B]/20 dark:text-[#FF9485]';
     return '';
 }
 
@@ -84,9 +84,9 @@ export default function PengirimanShow({ pengiriman }: { pengiriman: Pengiriman 
                 )}
 
                 {nota && !adaSelisih && beratPekerja > 0 && beratRam > 0 && (
-                    <div className="flex items-center gap-3 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-900/30 dark:bg-green-950/20">
-                        <CheckCircleIcon className="size-5 text-green-600 dark:text-green-400 shrink-0" />
-                        <p className="text-sm font-medium text-green-700 dark:text-green-400">
+                    <div className="flex items-center gap-3 rounded-lg border border-[#FFD4CC] bg-[#FFF2F0] p-4 dark:border-[#5A2820]/30 dark:bg-[#3A1714]/20">
+                        <CheckCircleIcon className="size-5 text-[#F0654F] dark:text-[#FF9485] shrink-0" />
+                        <p className="text-sm font-medium text-[#F0654F] dark:text-[#FF9485]">
                             Berat laporan supir sesuai dengan nota RAM. Tidak ada selisih.
                         </p>
                     </div>
@@ -148,13 +148,13 @@ export default function PengirimanShow({ pengiriman }: { pengiriman: Pengiriman 
                                     nota
                                         ? adaSelisih
                                             ? "border-red-200 bg-red-50 dark:border-red-900/30 dark:bg-red-950/20"
-                                            : "border-green-200 bg-green-50 dark:border-green-900/30 dark:bg-green-950/20"
+                                            : "border-[#FFD4CC] bg-[#FFF2F0] dark:border-[#5A2820]/30 dark:bg-[#3A1714]/20"
                                         : "border-border bg-muted/30"
                                 )}>
                                     <p className="text-xs text-muted-foreground mb-1">Nota RAM</p>
                                     <p className={cn(
                                         "text-2xl font-bold",
-                                        nota ? (adaSelisih ? "text-red-700 dark:text-red-400" : "text-green-700 dark:text-green-400") : "text-foreground"
+                                        nota ? (adaSelisih ? "text-red-700 dark:text-red-400" : "text-[#F0654F] dark:text-[#FF9485]") : "text-foreground"
                                     )}>
                                         {beratRam > 0 ? beratRam.toLocaleString('id-ID') : '-'}
                                     </p>
@@ -168,7 +168,7 @@ export default function PengirimanShow({ pengiriman }: { pengiriman: Pengiriman 
                                     "mt-3 rounded-lg p-3 text-center text-sm font-medium",
                                     adaSelisih
                                         ? "bg-red-50 text-red-700 dark:bg-red-950/20 dark:text-red-400"
-                                        : "bg-green-50 text-green-700 dark:bg-green-950/20 dark:text-green-400"
+                                        : "bg-[#FFF2F0] text-[#F0654F] dark:bg-[#3A1714]/20 dark:text-[#FF9485]"
                                 )}>
                                     {adaSelisih
                                         ? `Selisih: ${selisih > 0 ? '+' : ''}${selisih.toLocaleString('id-ID')} kg`

@@ -100,7 +100,7 @@ export default function Timbang({ pengiriman }: { pengiriman: Pengiriman }) {
                             <CardFooter className="flex justify-end border-t p-6">
                                 <Button
                                     type="submit"
-                                    className="bg-[#65A30D] hover:bg-[#84CC16]"
+                                    className="bg-[#FF7E6B] hover:bg-[#FF9485]"
                                     disabled={processing || !data.berat_netto_kg}
                                 >
                                     {processing && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}

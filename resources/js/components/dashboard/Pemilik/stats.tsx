@@ -12,8 +12,8 @@ export function DashboardStats({ stats }: { stats: PemilikDashboardProps['stats'
             delta: stats.deltaBerat,
             footnote: "vs kemarin",
             lowerIsBetter: false,
-            icon: <Trees className="h-4 w-4 text-[#65A30D] dark:text-green-400" />,
-            iconStyle: "bg-[#DCFCE7] dark:bg-green-500/20",
+            icon: <Trees className="h-4 w-4 text-white" />,
+            iconStyle: "bg-[#2B2E6B] dark:bg-indigo-500/40",
         },
         {
             label: "Pengiriman Hari Ini",
@@ -21,8 +21,8 @@ export function DashboardStats({ stats }: { stats: PemilikDashboardProps['stats'
             delta: stats.deltaTruk,
             footnote: "vs kemarin",
             lowerIsBetter: false,
-            icon: <Truck className="h-4 w-4 text-[#1D4ED8] dark:text-blue-400" />,
-            iconStyle: "bg-[#DBEAFE] dark:bg-blue-500/20",
+            icon: <Truck className="h-4 w-4 text-white" />,
+            iconStyle: "bg-[#3A3F86] dark:bg-indigo-500/40",
         },
         {
             label: "Menunggu Nota",
@@ -30,8 +30,8 @@ export function DashboardStats({ stats }: { stats: PemilikDashboardProps['stats'
             delta: stats.deltaMenunggu,
             footnote: "vs kemarin",
             lowerIsBetter: true,
-            icon: <FileText className="h-4 w-4 text-[#B45309] dark:text-amber-400" />,
-            iconStyle: "bg-[#FEF3C7] dark:bg-amber-500/20",
+            icon: <FileText className="h-4 w-4 text-white" />,
+            iconStyle: "bg-[#FF7E6B] dark:bg-[#FF7E6B]/80",
         },
         {
             label: "Total Lahan Aktif",
@@ -39,8 +39,8 @@ export function DashboardStats({ stats }: { stats: PemilikDashboardProps['stats'
             delta: 0,
             footnote: `${stats.totalMobil} armada terdaftar`,
             lowerIsBetter: false,
-            icon: <LayoutGrid className="h-4 w-4 text-[#7C3AED] dark:text-violet-400" />,
-            iconStyle: "bg-[#EDE9FE] dark:bg-violet-500/20",
+            icon: <LayoutGrid className="h-4 w-4 text-white" />,
+            iconStyle: "bg-[#5B5FB0] dark:bg-indigo-400/40",
         },
     ];
 

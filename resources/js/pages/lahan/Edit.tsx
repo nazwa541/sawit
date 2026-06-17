@@ -76,7 +76,7 @@ export default function LahanEdit({ lahan }: { lahan: Lahan }) {
                             <CardFooter className="flex justify-end border-t p-6">
                                 <Button 
                                     type="submit" 
-                                    className="bg-[#65A30D] hover:bg-[#84CC16]"
+                                    className="bg-[#FF7E6B] hover:bg-[#FF9485]"
                                     disabled={processing}
                                 >
                                     {processing && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}

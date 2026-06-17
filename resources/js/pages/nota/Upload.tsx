@@ -104,7 +104,7 @@ export default function NotaUpload({ pengiriman }: { pengiriman: Pengiriman }) {
                                     {/* Perbandingan selisih */}
                                     {data.berat_ram_kg !== '' && beratPekerja > 0 && (
                                         <div className={`rounded-lg border p-3 text-sm ${selisih === 0
-                                            ? 'border-green-200 bg-green-50 text-green-700 dark:border-green-900/30 dark:bg-green-950/20 dark:text-green-400'
+                                            ? 'border-[#FFD4CC] bg-[#FFF2F0] text-[#F0654F] dark:border-[#5A2820]/30 dark:bg-[#3A1714]/20 dark:text-[#FF9485]'
                                             : 'border-red-200 bg-red-50 text-red-700 dark:border-red-900/30 dark:bg-red-950/20 dark:text-red-400'
                                             }`}>
                                             {selisih === 0 ? (
@@ -163,7 +163,7 @@ export default function NotaUpload({ pengiriman }: { pengiriman: Pengiriman }) {
                                                     <XIcon className="size-3" />
                                                 </button>
                                             </div>
-                                            <p className="text-sm font-medium text-[#65A30D]">✓ {data.foto_nota.name}</p>
+                                            <p className="text-sm font-medium text-[#FF7E6B]">✓ {data.foto_nota.name}</p>
                                         </div>
                                     )}
 
@@ -173,7 +173,7 @@ export default function NotaUpload({ pengiriman }: { pengiriman: Pengiriman }) {
                             <CardFooter className="flex justify-end border-t p-6">
                                 <Button
                                     type="submit"
-                                    className="bg-[#65A30D] hover:bg-[#84CC16]"
+                                    className="bg-[#FF7E6B] hover:bg-[#FF9485]"
                                     disabled={processing}
                                 >
                                     {processing && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}

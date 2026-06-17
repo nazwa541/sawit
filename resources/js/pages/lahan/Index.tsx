@@ -3,7 +3,7 @@ import AppHeaderLayout from '@/layouts/app/app-header-layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { PlusIcon, EditIcon, TrashIcon } from 'lucide-react';
+import { PlusIcon, EditIcon, TrashIcon, SearchIcon } from 'lucide-react';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -15,8 +15,9 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { usePage } from '@inertiajs/react';
 
 interface Lahan {
@@ -26,6 +27,12 @@ interface Lahan {
 }
 
 export default function LahanIndex({ lahans }: { lahans: Lahan[] }) {
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const filteredLahans = lahans.filter(lahan =>
+        lahan.nama_blok.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     const handleDelete = (id: number) => {
 
         router.delete(`/lahan/${id}`);
@@ -47,7 +54,7 @@ export default function LahanIndex({ lahans }: { lahans: Lahan[] }) {
                         <h1 className="text-2xl font-bold tracking-tight">Blok Kebun</h1>
                         <p className="text-sm text-muted-foreground">Kelola data lahan dan blok kebun sawit Anda.</p>
                     </div>
-                    <Button asChild className="bg-[#65A30D] hover:bg-[#84CC16]">
+                    <Button asChild className="bg-[#FF7E6B] hover:bg-[#FF9485]">
                         <Link href="/lahan/create">
                             <PlusIcon className="mr-2 h-4 w-4" />
                             Tambah Lahan
@@ -56,9 +63,21 @@ export default function LahanIndex({ lahans }: { lahans: Lahan[] }) {
                 </div>
 
                 <Card className="rounded-[20px] shadow-sm">
-                    <CardHeader>
-                        <CardTitle>Daftar Lahan</CardTitle>
-                        <CardDescription>Semua lahan yang terdaftar di sistem.</CardDescription>
+                    <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <CardTitle>Daftar Lahan</CardTitle>
+                            <CardDescription>Semua lahan yang terdaftar di sistem.</CardDescription>
+                        </div>
+                        <div className="relative w-full sm:w-72">
+                            <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                type="text"
+                                placeholder="Cari nama blok..."
+                                className="pl-9 h-9"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                        </div>
                     </CardHeader>
                     <CardContent>
                         <Table>
@@ -70,14 +89,14 @@ export default function LahanIndex({ lahans }: { lahans: Lahan[] }) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {lahans.length === 0 ? (
+                                {filteredLahans.length === 0 ? (
                                     <TableRow>
                                         <TableCell colSpan={3} className="h-24 text-center">
-                                            Belum ada data lahan.
+                                            {lahans.length === 0 ? 'Belum ada data lahan.' : 'Data lahan tidak ditemukan.'}
                                         </TableCell>
                                     </TableRow>
                                 ) : (
-                                    lahans.map((lahan) => (
+                                    filteredLahans.map((lahan) => (
                                         <TableRow key={lahan.id}>
                                             <TableCell className="font-medium">{lahan.nama_blok}</TableCell>
                                             <TableCell>{lahan.luas_ha} ha</TableCell>

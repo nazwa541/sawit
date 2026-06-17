@@ -17,7 +17,7 @@ type QueueRow = { day: string; jumlah: number };
 const chartConfig = {
     jumlah: {
         label: "Truk",
-        color: "#65A30D",
+        color: "#FF7E6B",
     },
 } satisfies ChartConfig;
 

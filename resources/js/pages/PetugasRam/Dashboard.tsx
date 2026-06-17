@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { SearchIcon, UploadIcon, TruckIcon, ClockIcon } from 'lucide-react';
-import { TruckQueueChart } from '@/components/first-reply-time-chart';
+import { TruckQueueChart } from '@/components/dashboard/PetugasRam/first-reply-time-chart';
 import { useState } from 'react';
 
 interface MenungguItem {
@@ -42,7 +42,7 @@ export default function PetugasRamDashboard() {
                         <p className="text-muted-foreground">Silakan cari plat nomor truk untuk mengunggah foto nota timbangan.</p>
                     </div>
 
-                    <Card className="border-[#65A30D]/20 bg-green-50/50 dark:bg-green-950/10">
+                    <Card className="border-[#FF7E6B]/20 bg-[#FFF2F0]/50 dark:bg-[#3A1714]/10">
                         <CardContent className="p-4 sm:p-6">
                             <div className="flex w-full flex-col items-center gap-3 sm:flex-row">
                                 <div className="relative flex-1">
@@ -117,7 +117,7 @@ export default function PetugasRamDashboard() {
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div>
-                                <div className="text-3xl font-bold text-[#65A30D]">{notaHariIni}</div>
+                                <div className="text-3xl font-bold text-[#FF7E6B]">{notaHariIni}</div>
                                 <p className="text-sm text-muted-foreground">Nota Berhasil Diunggah</p>
                             </div>
                             <div className="h-px w-full bg-border" />

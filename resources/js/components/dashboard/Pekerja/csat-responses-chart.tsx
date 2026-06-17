@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/chart";
 
 const chartConfig = {
-    selesai: { label: "Selesai", color: "#65A30D" },
+    selesai: { label: "Selesai", color: "#2B2E6B" },
     nota: { label: "Menunggu Nota", color: "#EAB308" },
     jalan: { label: "Dalam Perjalanan", color: "#3B82F6" },
 } satisfies ChartConfig;

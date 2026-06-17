@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { ScaleIcon, TruckIcon, AlertTriangleIcon, CheckCircleIcon, EyeIcon, FilterIcon, PrinterIcon } from 'lucide-react';
+import { ScaleIcon, TruckIcon, AlertTriangleIcon, CheckCircleIcon, EyeIcon, FilterIcon, PrinterIcon, SearchIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
@@ -50,6 +50,17 @@ export default function LaporanIndex() {
     const [dari, setDari] = useState(filters.dari);
     const [sampai, setSampai] = useState(filters.sampai);
     const [lahanId, setLahanId] = useState(filters.lahan_id ?? 'semua');
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const filteredPengiriman = pengiriman.filter(row => {
+        const searchStr = searchQuery.toLowerCase();
+        return (
+            row.plat_nomor?.toLowerCase().includes(searchStr) ||
+            row.nama_mobil?.toLowerCase().includes(searchStr) ||
+            row.blok?.toLowerCase().includes(searchStr) ||
+            row.supir?.toLowerCase().includes(searchStr)
+        );
+    });
 
     const applyFilter = () => {
         router.get('/laporan', {
@@ -101,7 +112,7 @@ export default function LaporanIndex() {
                                 </Select>
                             </div>
                             <div className="flex items-end">
-                                <Button onClick={applyFilter} className="h-9 w-full bg-[#65A30D] hover:bg-[#4D7C0F] text-white">
+                                <Button onClick={applyFilter} className="h-9 w-full bg-[#FF7E6B] hover:bg-[#F0654F] text-white">
                                     <FilterIcon className="mr-2 size-3.5" />
                                     Terapkan
                                 </Button>
@@ -122,7 +133,7 @@ export default function LaporanIndex() {
                     <Card className="rounded-[20px] shadow-sm">
                         <CardContent className="p-4">
                             <p className="text-xs text-muted-foreground">Total Berat (Supir)</p>
-                            <p className="text-2xl font-bold mt-1 text-[#65A30D]">{(summary.totalBeratKg / 1000).toFixed(2)}</p>
+                            <p className="text-2xl font-bold mt-1 text-[#FF7E6B]">{(summary.totalBeratKg / 1000).toFixed(2)}</p>
                             <p className="text-xs text-muted-foreground">ton</p>
                         </CardContent>
                     </Card>
@@ -136,7 +147,7 @@ export default function LaporanIndex() {
                     <Card className={cn("rounded-[20px] shadow-sm", summary.kasusSelisih > 0 ? "border-red-200 dark:border-red-900/40" : "")}>
                         <CardContent className="p-4">
                             <p className="text-xs text-muted-foreground">Kasus Selisih</p>
-                            <p className={cn("text-2xl font-bold mt-1", summary.kasusSelisih > 0 ? "text-red-600 dark:text-red-400" : "text-[#65A30D]")}>
+                            <p className={cn("text-2xl font-bold mt-1", summary.kasusSelisih > 0 ? "text-red-600 dark:text-red-400" : "text-[#FF7E6B]")}>
                                 {summary.kasusSelisih}
                             </p>
                             <p className="text-xs text-muted-foreground">
@@ -150,19 +161,31 @@ export default function LaporanIndex() {
 
                 {/* Tabel */}
                 <Card className="rounded-[20px] shadow-sm">
-                    <CardHeader className="flex flex-row items-center justify-between">
+                    <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
                             <CardTitle>Detail Pengiriman</CardTitle>
                             <CardDescription>{pengiriman.length} data pengiriman selesai</CardDescription>
                         </div>
-                        <Button
-                            onClick={handleExportPdf}
-                            variant="outline"
-                            className="print-hide h-9 gap-2 border-[#65A30D] text-[#65A30D] hover:bg-[#f0fdf4] hover:text-[#4D7C0F]"
-                        >
-                            <PrinterIcon className="size-4" />
-                            Export PDF
-                        </Button>
+                        <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-center">
+                            <div className="relative w-full sm:w-64">
+                                <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                    type="text"
+                                    placeholder="Cari plat, mobil, blok, supir..."
+                                    className="pl-9 h-9"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                            </div>
+                            <Button
+                                onClick={handleExportPdf}
+                                variant="outline"
+                                className="print-hide h-9 gap-2 border-[#FF7E6B] text-[#FF7E6B] hover:bg-[#FFF2F0] hover:text-[#F0654F] w-full sm:w-auto"
+                            >
+                                <PrinterIcon className="size-4" />
+                                Export PDF
+                            </Button>
+                        </div>
                     </CardHeader>
                     <CardContent className="p-0">
                         <div className="overflow-auto">
@@ -181,13 +204,13 @@ export default function LaporanIndex() {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {pengiriman.length === 0 ? (
+                                {filteredPengiriman.length === 0 ? (
                                         <TableRow>
                                             <TableCell colSpan={9} className="h-32 text-center text-muted-foreground">
-                                                Tidak ada data untuk periode yang dipilih.
+                                                {pengiriman.length === 0 ? 'Tidak ada data untuk periode yang dipilih.' : 'Data tidak ditemukan.'}
                                             </TableCell>
                                         </TableRow>
-                                    ) : pengiriman.map((row) => {
+                                    ) : filteredPengiriman.map((row) => {
                                         const adaSelisih = row.selisih !== null && row.selisih !== 0;
                                         return (
                                             <TableRow key={row.id} className={cn("hover:bg-muted/50", adaSelisih && "bg-red-50/50 dark:bg-red-950/10")}>
@@ -208,7 +231,7 @@ export default function LaporanIndex() {
                                                 </TableCell>
                                                 <TableCell className="text-right tabular-nums text-sm">
                                                     {row.selisih !== null ? (
-                                                        <span className={cn("font-semibold", row.selisih === 0 ? "text-[#65A30D]" : "text-red-600 dark:text-red-400")}>
+                                                        <span className={cn("font-semibold", row.selisih === 0 ? "text-[#FF7E6B]" : "text-red-600 dark:text-red-400")}>
                                                             {row.selisih === 0 ? '✓' : `${row.selisih > 0 ? '+' : ''}${fmt(row.selisih)} kg`}
                                                         </span>
                                                     ) : <span className="text-muted-foreground">-</span>}
@@ -219,7 +242,7 @@ export default function LaporanIndex() {
                                                             Belum ada nota
                                                         </Badge>
                                                     ) : row.selisih === 0 ? (
-                                                        <Badge className="rounded-full border-none shadow-none text-xs bg-[#DCFCE7] text-[#15803D] dark:bg-green-500/20 dark:text-green-400">
+                                                        <Badge className="rounded-full border-none shadow-none text-xs bg-[#FFE7E2] text-[#2B2E6B] dark:bg-[#FF7E6B]/20 dark:text-[#FF9485]">
                                                             <CheckCircleIcon className="mr-1 size-3" />Sesuai
                                                         </Badge>
                                                     ) : (

@@ -1,5 +1,5 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import WhatsAppOtpForm from '@/Components/WhatsAppOtpForm';
+import WhatsAppOtpForm from '@/components/WhatsAppOtpForm';
 import { Eye, EyeOff, LoaderCircle } from 'lucide-react';
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
@@ -316,19 +316,19 @@ export default function Register() {
     const orangePos = calculatePosition(orangeRef);
 
     return (
-        <div className="grid min-h-screen bg-background text-foreground selection:bg-green-100 selection:dark:bg-green-500/20 selection:text-green-700 selection:dark:text-green-400 lg:grid-cols-2">
+        <div className="grid min-h-screen bg-background text-foreground selection:bg-[#FFE7E2] selection:dark:bg-[#FF7E6B]/20 selection:text-[#F0654F] selection:dark:text-[#FF9485] lg:grid-cols-2">
             <Head title="Log in" />
 
             {/* Left Content Section */}
             <div className="relative hidden flex-col justify-between overflow-hidden border-r border-border bg-background p-12 text-foreground lg:flex">
                 <div className="relative z-20">
                     <Link href="/" className="flex items-center gap-3 text-xl font-bold tracking-tight">
-                        <div className="flex size-10 items-center justify-center rounded-xl border border-border bg-green-100 dark:bg-green-500/20 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
-                            <AppLogoIcon className="size-6 fill-current text-green-700 dark:text-green-400" />
+                        <div className="flex size-10 items-center justify-center rounded-xl border border-border bg-[#FFE7E2] dark:bg-[#FF7E6B]/20 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+                            <AppLogoIcon className="size-6 fill-current text-[#F0654F] dark:text-[#FF9485]" />
                         </div>
                         <div className="flex flex-col">
                             <span className="leading-none font-bold text-foreground">SISTRA-SAWIT</span>
-                            <span className="mt-1 text-[10px] font-semibold tracking-widest text-green-700 dark:text-green-400 uppercase">Transparansi RAM Sawit</span>
+                            <span className="mt-1 text-[10px] font-semibold tracking-widest text-[#F0654F] dark:text-[#FF9485] uppercase">Transparansi RAM Sawit</span>
                         </div>
                     </Link>
                 </div>
@@ -602,8 +602,8 @@ export default function Register() {
                     {/* Mobile Logo */}
                     <div className="mb-8 flex items-center justify-center gap-2 text-lg font-semibold lg:hidden">
                         <Link href="/" className="flex items-center gap-2 font-semibold">
-                            <div className="flex size-8 items-center justify-center rounded-lg border border-border bg-green-100 dark:bg-green-500/20">
-                                <AppLogoIcon className="size-5 fill-current text-green-700 dark:text-green-400" />
+                            <div className="flex size-8 items-center justify-center rounded-lg border border-border bg-[#FFE7E2] dark:bg-[#FF7E6B]/20">
+                                <AppLogoIcon className="size-5 fill-current text-[#F0654F] dark:text-[#FF9485]" />
                             </div>
                             <span className="font-bold tracking-tight text-foreground">{name}</span>
                         </Link>
@@ -632,7 +632,7 @@ export default function Register() {
                                 placeholder="Cth: Budi Santoso"
                                 onFocus={() => setIsTyping(true)}
                                 onBlur={() => setIsTyping(false)}
-                                className="h-11 rounded-lg border-border bg-background text-foreground transition-all focus:border-[#65A30D] focus:ring-1 focus:ring-[#65A30D]"
+                                className="h-11 rounded-lg border-border bg-background text-foreground transition-all focus:border-[#FF7E6B] focus:ring-1 focus:ring-[#FF7E6B]"
                             />
                             <InputError message={errors.name} />
                         </div>
@@ -651,7 +651,7 @@ export default function Register() {
                                     placeholder="budi@example.com"
                                     onFocus={() => setIsTyping(true)}
                                     onBlur={() => setIsTyping(false)}
-                                    className="h-11 rounded-lg border-border bg-background text-foreground transition-all focus:border-[#65A30D] focus:ring-1 focus:ring-[#65A30D]"
+                                    className="h-11 rounded-lg border-border bg-background text-foreground transition-all focus:border-[#FF7E6B] focus:ring-1 focus:ring-[#FF7E6B]"
                                 />
                                 <InputError message={errors.email} />
                             </div>
@@ -668,7 +668,7 @@ export default function Register() {
                                     placeholder="0812..."
                                     onFocus={() => setIsTyping(true)}
                                     onBlur={() => setIsTyping(false)}
-                                    className="h-11 rounded-lg border-border bg-background text-foreground transition-all focus:border-[#65A30D] focus:ring-1 focus:ring-[#65A30D]"
+                                    className="h-11 rounded-lg border-border bg-background text-foreground transition-all focus:border-[#FF7E6B] focus:ring-1 focus:ring-[#FF7E6B]"
                                 />
                                 <InputError message={errors.phone} />
                             </div>
@@ -683,7 +683,7 @@ export default function Register() {
                                 onChange={(e) => setData('role', e.target.value)}
                                 disabled={processing}
                                 tabIndex={4}
-                                className="flex h-11 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all focus:border-[#65A30D] focus:ring-[#65A30D]"
+                                className="flex h-11 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all focus:border-[#FF7E6B] focus:ring-[#FF7E6B]"
                             >
                                 <option value="pekerja">Pekerja Kebun (Supir)</option>
                                 <option value="petugas_ram">Petugas RAM (Timbangan)</option>
@@ -704,7 +704,7 @@ export default function Register() {
                                     onChange={(e) => setData('password', e.target.value)}
                                     disabled={processing}
                                     placeholder="Minimal 8 karakter"
-                                    className="h-11 rounded-lg border-border bg-background pr-10 text-foreground transition-all focus:border-[#65A30D] focus:ring-1 focus:ring-[#65A30D]"
+                                    className="h-11 rounded-lg border-border bg-background pr-10 text-foreground transition-all focus:border-[#FF7E6B] focus:ring-1 focus:ring-[#FF7E6B]"
                                 />
                                 <button
                                     type="button"
@@ -729,7 +729,7 @@ export default function Register() {
                                 onChange={(e) => setData('password_confirmation', e.target.value)}
                                 disabled={processing}
                                 placeholder="Ulangi password"
-                                className="h-11 rounded-lg border-border bg-background text-foreground transition-all focus:border-[#65A30D] focus:ring-1 focus:ring-[#65A30D]"
+                                className="h-11 rounded-lg border-border bg-background text-foreground transition-all focus:border-[#FF7E6B] focus:ring-1 focus:ring-[#FF7E6B]"
                             />
                             <InputError message={errors.password_confirmation} />
                         </div>
@@ -771,7 +771,7 @@ export default function Register() {
 
                         <Button
                             type="submit"
-                            className="mt-6 flex h-11 w-full animate-none cursor-pointer items-center justify-center gap-2 rounded-lg border-0 bg-[#65A30D] text-base font-bold text-white shadow-sm transition-all hover:bg-[#84CC16]"
+                            className="mt-6 flex h-11 w-full animate-none cursor-pointer items-center justify-center gap-2 rounded-lg border-0 bg-[#FF7E6B] text-base font-bold text-white shadow-sm transition-all hover:bg-[#FF9485]"
                             tabIndex={7}
                             disabled={processing}
                         >
@@ -783,7 +783,7 @@ export default function Register() {
                     {/* Login Link */}
                     <div className="mt-6 text-center text-sm text-muted-foreground">
                         Sudah punya akun?{' '}
-                        <TextLink href={route('login')} tabIndex={8} className="font-medium text-[#65A30D] dark:text-green-400 transition-colors hover:text-[#84CC16]">
+                        <TextLink href={route('login')} tabIndex={8} className="font-medium text-[#FF7E6B] dark:text-[#FF9485] transition-colors hover:text-[#FF9485]">
                             Log in di sini
                         </TextLink>
                     </div>

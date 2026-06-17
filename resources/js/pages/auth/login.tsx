@@ -10,7 +10,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { type SharedData } from '@/types';
-import WhatsAppOtpForm from '@/Components/WhatsAppOtpForm';
+import WhatsAppOtpForm from '@/components/WhatsAppOtpForm';
 
 interface LoginForm {
     login: string;
@@ -318,19 +318,19 @@ export default function Login({ status, canResetPassword }: LoginProps) {
     const orangePos = calculatePosition(orangeRef);
 
     return (
-        <div className="grid min-h-screen bg-background text-foreground selection:bg-green-100 selection:dark:bg-green-500/20 selection:text-green-700 selection:dark:text-green-400 lg:grid-cols-2">
+        <div className="grid min-h-screen bg-background text-foreground selection:bg-[#FFE7E2] selection:dark:bg-[#FF7E6B]/20 selection:text-[#F0654F] selection:dark:text-[#FF9485] lg:grid-cols-2">
             <Head title="Log in" />
 
             {/* Left Content Section */}
             <div className="relative hidden flex-col justify-between overflow-hidden border-r border-border bg-background p-12 text-foreground lg:flex">
                 <div className="relative z-20">
                     <Link href="/" className="flex items-center gap-3 text-xl font-bold tracking-tight">
-                        <div className="flex size-10 items-center justify-center rounded-xl border border-border bg-green-100 dark:bg-green-500/20 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
-                            <AppLogoIcon className="size-6 fill-current text-green-700 dark:text-green-400" />
+                        <div className="flex size-10 items-center justify-center rounded-xl border border-border bg-[#FFE7E2] dark:bg-[#FF7E6B]/20 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+                            <AppLogoIcon className="size-6 fill-current text-[#F0654F] dark:text-[#FF9485]" />
                         </div>
                         <div className="flex flex-col">
                             <span className="leading-none font-bold text-foreground">SISTRA-SAWIT</span>
-                            <span className="mt-1 text-[10px] font-semibold tracking-widest text-green-700 dark:text-green-400 uppercase">Transparansi RAM Sawit</span>
+                            <span className="mt-1 text-[10px] font-semibold tracking-widest text-[#F0654F] dark:text-[#FF9485] uppercase">Transparansi RAM Sawit</span>
                         </div>
                     </Link>
                 </div>
@@ -604,8 +604,8 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     {/* Mobile Logo */}
                     <div className="mb-8 flex items-center justify-center gap-2 text-lg font-semibold lg:hidden">
                         <Link href="/" className="flex items-center gap-2 font-semibold">
-                            <div className="flex size-8 items-center justify-center rounded-lg border border-border bg-green-100 dark:bg-green-500/20">
-                                <AppLogoIcon className="size-5 fill-current text-green-700 dark:text-green-400" />
+                            <div className="flex size-8 items-center justify-center rounded-lg border border-border bg-[#FFE7E2] dark:bg-[#FF7E6B]/20">
+                                <AppLogoIcon className="size-5 fill-current text-[#F0654F] dark:text-[#FF9485]" />
                             </div>
                             <span className="font-bold tracking-tight text-foreground">{name}</span>
                         </Link>
@@ -619,7 +619,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                     {/* Status message */}
                     {status && (
-                        <div className="mb-6 rounded-lg border border-green-500/20 bg-green-100 dark:bg-green-500/10 p-3 text-center text-sm font-medium text-green-700 dark:text-green-400">
+                        <div className="mb-6 rounded-lg border border-[#FF7E6B]/20 bg-[#FFE7E2] dark:bg-[#FF7E6B]/10 p-3 text-center text-sm font-medium text-[#F0654F] dark:text-[#FF9485]">
                             {status}
                         </div>
                     )}
@@ -642,7 +642,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                 required
                                 autoFocus
                                 tabIndex={1}
-                                className="h-12 rounded-lg border-border bg-background text-foreground transition-all placeholder:text-muted-foreground focus:border-[#65A30D] focus:ring-1 focus:ring-[#65A30D] focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
+                                className="h-12 rounded-lg border-border bg-background text-foreground transition-all placeholder:text-muted-foreground focus:border-[#FF7E6B] focus:ring-1 focus:ring-[#FF7E6B] focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
                             />
                             <InputError message={errors.login} />
                         </div>
@@ -655,7 +655,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                 {canResetPassword && (
                                     <TextLink
                                         href={route('password.request')}
-                                        className="text-sm font-medium text-[#65A30D] transition-colors hover:text-[#84CC16]"
+                                        className="text-sm font-medium text-[#FF7E6B] transition-colors hover:text-[#FF9485]"
                                         tabIndex={5}
                                     >
                                         Forgot password?
@@ -672,7 +672,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                     onChange={(e) => setData('password', e.target.value)}
                                     required
                                     tabIndex={2}
-                                    className="h-12 rounded-lg border-border bg-background pr-10 text-foreground transition-all placeholder:text-muted-foreground focus:border-[#65A30D] focus:ring-1 focus:ring-[#65A30D] focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
+                                    className="h-12 rounded-lg border-border bg-background pr-10 text-foreground transition-all placeholder:text-muted-foreground focus:border-[#FF7E6B] focus:ring-1 focus:ring-[#FF7E6B] focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none"
                                 />
                                 <button
                                     type="button"
@@ -693,7 +693,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                     checked={data.remember}
                                     onCheckedChange={(checked) => setData('remember', checked === true)}
                                     tabIndex={3}
-                                    className="size-5 rounded border-border data-[state=checked]:border-[#65A30D] data-[state=checked]:bg-[#65A30D] data-[state=checked]:text-white"
+                                    className="size-5 rounded border-border data-[state=checked]:border-[#FF7E6B] data-[state=checked]:bg-[#FF7E6B] data-[state=checked]:text-white"
                                 />
                                 <Label htmlFor="remember" className="cursor-pointer text-sm font-normal text-muted-foreground selection:bg-transparent">
                                     Remember me
@@ -738,7 +738,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                         <Button
                             type="submit"
-                            className="mt-4 flex h-12 w-full animate-none cursor-pointer items-center justify-center gap-2 rounded-lg border-0 bg-[#65A30D] text-base font-bold text-white shadow-sm transition-all hover:bg-[#84CC16]"
+                            className="mt-4 flex h-12 w-full animate-none cursor-pointer items-center justify-center gap-2 rounded-lg border-0 bg-[#FF7E6B] text-base font-bold text-white shadow-sm transition-all hover:bg-[#FF9485]"
                             size="lg"
                             disabled={processing}
                             tabIndex={4}
@@ -757,7 +757,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     {/* Register Link */}
                     <div className="mt-6 text-center text-sm text-muted-foreground">
                         Belum punya akun?{' '}
-                        <TextLink href={route('register')} className="font-medium text-[#65A30D] dark:text-green-400 transition-colors hover:text-[#84CC16]">
+                        <TextLink href={route('register')} className="font-medium text-[#FF7E6B] dark:text-[#FF9485] transition-colors hover:text-[#FF9485]">
                             Daftar di sini
                         </TextLink>
                     </div>
@@ -765,7 +765,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                     {/* Footer Notice / IT Support info */}
                     <div className="mt-4 border-t border-border pt-6 text-center text-xs text-muted-foreground">
                         Hanya untuk personel berwenang. Masalah dengan akun Anda?{' '}
-                        <a href="mailto:support@sistrasawit.com" className="font-medium text-[#65A30D] dark:text-green-400 hover:underline">
+                        <a href="mailto:support@sistrasawit.com" className="font-medium text-[#FF7E6B] dark:text-[#FF9485] hover:underline">
                             Hubungi IT Support
                         </a>
                     </div>

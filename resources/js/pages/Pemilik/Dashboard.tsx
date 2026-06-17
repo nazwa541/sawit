@@ -1,11 +1,11 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
-import { DashboardStats } from '@/components/stats';
-import { ProductionVolumeChart } from '@/components/conversation-volume-chart';
-import { StatusPieChart } from '@/components/channel-breakdown-chart';
-import { RecentDeliveries } from '@/components/recent-conversations';
-import { FactoryActivity } from '@/components/support-activity';
+import { DashboardStats } from '@/components/dashboard/Pemilik/stats';
+import { ProductionVolumeChart } from '@/components/dashboard/Pemilik/conversation-volume-chart';
+import { StatusPieChart } from '@/components/dashboard/Pemilik/channel-breakdown-chart';
+import { RecentDeliveries } from '@/components/dashboard/Pemilik/recent-conversations';
+import { FactoryActivity } from '@/components/dashboard/Pemilik/support-activity';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard-pemilik' },

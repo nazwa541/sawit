@@ -60,7 +60,7 @@ export function AppSidebar() {
 				<SidebarMenuButton asChild>
 					<Link href="/dashboard">
 						<LogoIcon />
-						<span className="font-medium text-[#65A30D] dark:text-green-400">SISTRA-SAWIT</span>
+						<span className="font-semibold text-[#FF7E6B]">SISTRA-SAWIT</span>
 					</Link>
 				</SidebarMenuButton>
 			</SidebarHeader>

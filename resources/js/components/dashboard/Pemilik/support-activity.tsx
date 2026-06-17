@@ -10,7 +10,7 @@ interface Props extends ComponentProps<typeof Card> {
 }
 
 function statusColor(status: string) {
-    if (status === "selesai") return { bg: "bg-[#DCFCE7] dark:bg-green-500/20", icon: "text-[#65A30D] dark:text-green-400" };
+    if (status === "selesai") return { bg: "bg-[#E5E6F4] dark:bg-indigo-500/20", icon: "text-[#2B2E6B] dark:text-indigo-300" };
     if (status === "menunggu_nota") return { bg: "bg-[#FEF3C7] dark:bg-amber-500/20", icon: "text-[#B45309] dark:text-amber-400" };
     return { bg: "bg-[#DBEAFE] dark:bg-blue-500/20", icon: "text-[#1D4ED8] dark:text-blue-400" };
 }
@@ -55,7 +55,7 @@ export function FactoryActivity({ className, pengirimanTerbaru, ...props }: Prop
                 </ul>
             </CardContent>
             <div className="flex items-center justify-center border-t border-border py-2">
-                <Button asChild size="sm" variant="ghost" className="text-[#65A30D] dark:text-green-400 hover:text-[#4d7a0a] dark:hover:text-green-300 hover:bg-[#DCFCE7] dark:hover:bg-green-500/20">
+                <Button asChild size="sm" variant="ghost" className="text-[#FF7E6B] dark:text-[#FF9485] hover:text-[#F0654F] dark:hover:text-[#FF9485] hover:bg-[#FFE7E2] dark:hover:bg-[#FF7E6B]/20">
                     <a href="/pengiriman">
                         Lihat Semua
                         <ArrowRightIcon aria-hidden="true" className="ml-2 h-4 w-4" />

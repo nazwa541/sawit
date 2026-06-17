@@ -12,7 +12,7 @@ type Status = "perjalanan" | "menunggu_nota" | "selesai";
 function statusBadgeStyle(status: string) {
     if (status === "perjalanan") return "bg-[#DBEAFE] text-[#1D4ED8] hover:bg-[#DBEAFE] dark:bg-blue-500/20 dark:text-blue-400";
     if (status === "menunggu_nota") return "bg-[#FEF3C7] text-[#B45309] hover:bg-[#FEF3C7] dark:bg-amber-500/20 dark:text-amber-400";
-    if (status === "selesai") return "bg-[#DCFCE7] text-[#15803D] hover:bg-[#DCFCE7] dark:bg-green-500/20 dark:text-green-400";
+    if (status === "selesai") return "bg-[#E5E6F4] text-[#2B2E6B] hover:bg-[#E5E6F4] dark:bg-indigo-500/20 dark:text-indigo-300";
     return "";
 }
 
@@ -75,7 +75,7 @@ export function RecentDeliveries({ className, rows, ...props }: Props) {
                     </TableBody>
                 </Table>
                 <div className="flex justify-center border-t border-border py-3">
-                    <Button asChild size="sm" variant="ghost" className="text-[#65A30D] dark:text-green-400 hover:text-[#4d7a0a] dark:hover:text-green-300 hover:bg-[#DCFCE7] dark:hover:bg-green-500/20">
+                    <Button asChild size="sm" variant="ghost" className="text-[#FF7E6B] dark:text-[#FF9485] hover:text-[#F0654F] dark:hover:text-[#FF9485] hover:bg-[#FFE7E2] dark:hover:bg-[#FF7E6B]/20">
                         <a href="/pengiriman">
                             Lihat semua pengiriman
                             <ArrowRightIcon aria-hidden="true" className="ml-2 h-4 w-4" />

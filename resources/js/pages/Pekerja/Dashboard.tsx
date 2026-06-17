@@ -3,7 +3,7 @@ import AppLayout from '@/layouts/app-layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { TruckIcon, PlusIcon, ListChecksIcon, MapPinIcon, ScaleIcon, ClockIcon } from 'lucide-react';
-import { DeliveryStatusChart } from '@/components/csat-responses-chart';
+import { DeliveryStatusChart } from '@/components/dashboard/Pekerja/csat-responses-chart';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { type SharedData } from '@/types';
@@ -36,7 +36,7 @@ interface PekerjaDashboardProps {
 function statusBadgeStyle(status: string) {
     if (status === 'perjalanan') return 'bg-[#DBEAFE] text-[#1D4ED8] dark:bg-blue-500/20 dark:text-blue-400';
     if (status === 'menunggu_nota') return 'bg-[#FEF3C7] text-[#B45309] dark:bg-amber-500/20 dark:text-amber-400';
-    if (status === 'selesai') return 'bg-[#DCFCE7] text-[#15803D] dark:bg-green-500/20 dark:text-green-400';
+    if (status === 'selesai') return 'bg-[#FFE7E2] text-[#2B2E6B] dark:bg-[#FF7E6B]/20 dark:text-[#FF9485]';
     return '';
 }
 
@@ -68,7 +68,7 @@ export default function PekerjaDashboard() {
                         <p className="text-muted-foreground">Kelola pengiriman dan riwayat perjalanan Anda hari ini.</p>
                     </div>
                     <Button
-                        className="bg-[#65A30D] text-white hover:bg-[#4D7C0F]"
+                        className="bg-[#FF7E6B] text-white hover:bg-[#F0654F]"
                         onClick={() => router.visit('/pengiriman/create')}
                     >
                         <PlusIcon className="mr-2 size-4" />
@@ -122,7 +122,7 @@ export default function PekerjaDashboard() {
                                     {/* Aksi kontekstual */}
                                     {pengirimanAktif.status === 'perjalanan' && (
                                         <Button
-                                            className="w-full bg-[#65A30D] hover:bg-[#4D7C0F] text-white"
+                                            className="w-full bg-[#FF7E6B] hover:bg-[#F0654F] text-white"
                                             onClick={() => router.visit(`/pengiriman/${pengirimanAktif.id}/timbang`)}
                                         >
                                             <ScaleIcon className="mr-2 size-4" />
@@ -141,7 +141,7 @@ export default function PekerjaDashboard() {
                                     <p className="text-sm text-muted-foreground">Tidak ada pengiriman aktif saat ini.</p>
                                     <Button
                                         size="sm"
-                                        className="bg-[#65A30D] hover:bg-[#4D7C0F] text-white"
+                                        className="bg-[#FF7E6B] hover:bg-[#F0654F] text-white"
                                         onClick={() => router.visit('/pengiriman/create')}
                                     >
                                         <PlusIcon className="mr-1 size-3.5" />

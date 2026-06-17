@@ -3,7 +3,7 @@ import AppHeaderLayout from '@/layouts/app/app-header-layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { PlusIcon, EditIcon, TrashIcon, TruckIcon } from 'lucide-react';
+import { PlusIcon, EditIcon, TrashIcon, TruckIcon, SearchIcon } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
     AlertDialog,
@@ -16,8 +16,9 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { usePage } from '@inertiajs/react';
 
 interface Mobil {
@@ -29,6 +30,13 @@ interface Mobil {
 }
 
 export default function MobilIndex({ mobils }: { mobils: Mobil[] }) {
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const filteredMobils = mobils.filter(mobil =>
+        mobil.nama_mobil.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        mobil.plat_nomor.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     const handleDelete = (id: number) => {
         router.delete(`/mobil/${id}`);
     };
@@ -49,7 +57,7 @@ export default function MobilIndex({ mobils }: { mobils: Mobil[] }) {
                         <h1 className="text-2xl font-bold tracking-tight">Armada Mobil</h1>
                         <p className="text-sm text-muted-foreground">Kelola armada pengangkut TBS Anda.</p>
                     </div>
-                    <Button asChild className="bg-[#65A30D] hover:bg-[#84CC16]">
+                    <Button asChild className="bg-[#FF7E6B] hover:bg-[#FF9485]">
                         <Link href="/mobil/create">
                             <PlusIcon className="mr-2 h-4 w-4" />
                             Tambah Mobil
@@ -58,9 +66,21 @@ export default function MobilIndex({ mobils }: { mobils: Mobil[] }) {
                 </div>
 
                 <Card className="rounded-[20px] shadow-sm">
-                    <CardHeader>
-                        <CardTitle>Daftar Mobil</CardTitle>
-                        <CardDescription>Semua kendaraan operasional yang terdaftar di sistem.</CardDescription>
+                    <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <CardTitle>Daftar Mobil</CardTitle>
+                            <CardDescription>Semua kendaraan operasional yang terdaftar di sistem.</CardDescription>
+                        </div>
+                        <div className="relative w-full sm:w-72">
+                            <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                type="text"
+                                placeholder="Cari kendaraan atau plat..."
+                                className="pl-9 h-9"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                        </div>
                     </CardHeader>
                     <CardContent>
                         <Table>
@@ -73,14 +93,14 @@ export default function MobilIndex({ mobils }: { mobils: Mobil[] }) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {mobils.length === 0 ? (
+                                {filteredMobils.length === 0 ? (
                                     <TableRow>
                                         <TableCell colSpan={4} className="h-24 text-center">
-                                            Belum ada armada mobil.
+                                            {mobils.length === 0 ? 'Belum ada armada mobil.' : 'Data mobil tidak ditemukan.'}
                                         </TableCell>
                                     </TableRow>
                                 ) : (
-                                    mobils.map((mobil) => (
+                                    filteredMobils.map((mobil) => (
                                         <TableRow key={mobil.id}>
                                             <TableCell>
                                                 <div className="flex items-center gap-3">

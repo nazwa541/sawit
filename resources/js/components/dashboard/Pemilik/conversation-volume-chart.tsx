@@ -25,7 +25,7 @@ type VolumeRow = { date: string; ton: number };
 const chartConfig = {
     ton: {
         label: "Produksi (Ton)",
-        color: "#65A30D",
+        color: "#FF7E6B",
     },
 } satisfies ChartConfig;
 

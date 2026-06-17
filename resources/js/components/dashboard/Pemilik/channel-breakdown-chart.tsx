@@ -13,13 +13,13 @@ type PieRow = { status: string; label: string; jumlah: number };
 
 const chartConfig = {
     jumlah:        { label: "Jumlah" },
-    selesai:       { label: "Selesai",          color: "#65A30D" },
+    selesai:       { label: "Selesai",          color: "#2B2E6B"},
     menunggu_nota: { label: "Menunggu Nota",     color: "#EAB308" },
     perjalanan:    { label: "Perjalanan",        color: "#3B82F6" },
 } satisfies ChartConfig;
 
 const LEGEND_ITEMS = [
-    { key: "selesai",       label: "Selesai",       color: "#65A30D" },
+    { key: "selesai",       label: "Selesai",       color: "#2B2E6B" },
     { key: "menunggu_nota", label: "Menunggu Nota", color: "#EAB308" },
     { key: "perjalanan",    label: "Perjalanan",    color: "#3B82F6" },
 ];

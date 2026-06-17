@@ -81,16 +81,16 @@ export function OperatorOnDuty({
 	]);
 
 	return (
-		<Card className={cn("shadow-sm hover:shadow-md transition-all duration-200 border-[#E4E4E7] rounded-[20px] bg-white", className)} {...props}>
-			<CardHeader className="border-b border-[#E4E4E7]">
+		<Card className={cn("shadow-sm hover:shadow-md transition-all duration-200 border-border rounded-[20px] bg-card", className)} {...props}>
+			<CardHeader className="border-b border-border">
 				<CardTitle>Operator Bertugas</CardTitle>
 				<CardDescription>Petugas lapangan dan timbangan aktif</CardDescription>
 			</CardHeader>
 			<CardContent className="p-0">
-				<ul className="flex flex-col divide-y divide-[#E4E4E7]">
+				<ul className="flex flex-col divide-y divide-border">
 					{operators.map((t) => (
 						<li
-							className="flex items-center gap-2 p-3 sm:gap-3 hover:bg-[#F8FAFC]"
+							className="flex items-center gap-2 p-3 sm:gap-3 hover:bg-muted/50"
 							key={t.id}
 						>
 							<Avatar className="size-8">
@@ -98,10 +98,10 @@ export function OperatorOnDuty({
 								<AvatarFallback>{getInitials(t.name)}</AvatarFallback>
 							</Avatar>
 							<div className="min-w-0 flex-1 pr-1">
-								<p className="truncate font-medium text-[#18181B] text-sm leading-snug">
+								<p className="truncate font-medium text-card-foreground text-sm leading-snug">
 									{t.name}
 								</p>
-								<p className="flex items-center gap-2 text-[10px] text-[#71717A] leading-snug">
+								<p className="flex items-center gap-2 text-[10px] text-muted-foreground leading-snug">
 									<span className="flex shrink-0 items-center gap-1">
 										<StatusIndicator
 											color={t.status === "Aktif" ? "emerald" : "amber"}
@@ -109,7 +109,7 @@ export function OperatorOnDuty({
 										/>
 										{t.status}
 									</span>
-									<span className="inline-flex size-1 rounded-full bg-[#71717A]" />
+									<span className="inline-flex size-1 rounded-full bg-muted-foreground" />
 									<span className="truncate">{t.role}</span>
 								</p>
 							</div>
@@ -124,7 +124,7 @@ export function OperatorOnDuty({
 									</Button>
 								</DropdownMenuTrigger>
 								<DropdownMenuContent align="end" className="min-w-52">
-									<DropdownMenuLabel className="font-normal text-[#71717A] text-xs">
+									<DropdownMenuLabel className="font-normal text-muted-foreground text-xs">
 										{t.name}
 									</DropdownMenuLabel>
 									<DropdownMenuSeparator />

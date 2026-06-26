@@ -6,6 +6,7 @@ import { ProductionVolumeChart } from '@/components/dashboard/Pemilik/conversati
 import { StatusPieChart } from '@/components/dashboard/Pemilik/channel-breakdown-chart';
 import { RecentDeliveries } from '@/components/dashboard/Pemilik/recent-conversations';
 import { FactoryActivity } from '@/components/dashboard/Pemilik/support-activity';
+import { useEffect, useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard-pemilik' },
@@ -39,10 +40,43 @@ export default function Dashboard() {
     const { stats, pieChart, produksiChart, pengirimanTerbaru } =
         usePage<{ props: PemilikDashboardProps }>().props as unknown as PemilikDashboardProps;
 
+    // State untuk animasi rotasi teks
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const textOptions = [
+        { label: 'Pemilik Kebun', color: 'bg-emerald-400 text-emerald-800 dark:bg-emerald-500/30 dark:text-emerald-300' },
+        { label: 'Pengelola Lahan', color: 'bg-sky-400 text-sky-800 dark:bg-sky-500/30 dark:text-sky-300' },
+        { label: 'Mitra Sawit', color: 'bg-amber-400 text-amber-800 dark:bg-amber-500/30 dark:text-amber-300' },
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex((prev) => (prev + 1) % textOptions.length);
+        }, 2500);
+
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard | SISTRA-SAWIT" />
             <div className="flex flex-1 flex-col gap-4 p-4 md:gap-6 md:p-6">
+
+                {/* ===== TEXT ROTATE DAISYUI - SIMULASI ===== */}
+                <div className="rounded-xl border border-base-300 bg-base-100/50 px-6 py-4 shadow-sm">
+                    <span className="text-base-content/70 text-sm font-medium flex items-center gap-2">
+                        🚜 Monitoring Perkebunan untuk{' '}
+                        <span
+                            className="inline-block transition-all duration-700 ease-in-out"
+                            style={{
+                                transform: `rotateX(${currentIndex === 0 ? '0deg' : '360deg'})`,
+                            }}
+                        >
+                            <span className={`${textOptions[currentIndex].color} px-3 py-1 rounded-md font-semibold whitespace-nowrap`}>
+                                {textOptions[currentIndex].label}
+                            </span>
+                        </span>
+                    </span>
+                </div>
 
                 {/* Stat cards */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

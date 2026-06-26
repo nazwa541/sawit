@@ -1,10 +1,7 @@
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import AppHeaderLayout from '@/layouts/app/app-header-layout';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { PlusIcon, EditIcon, TrashIcon, CameraIcon, ScaleIcon, EyeIcon, SearchIcon } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -20,7 +17,6 @@ import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
 
 interface Pengiriman {
     id: number;
@@ -63,20 +59,23 @@ export default function PengirimanIndex({ pengiriman }: { pengiriman: Pengiriman
         if (flash?.error) toast.error(flash.error);
     }, [flash]);
 
-
     const getStatusBadge = (status: string) => {
         switch (status?.toLowerCase()) {
-            case 'perjalanan': return <Badge className="rounded-full border-none shadow-none bg-[#DBEAFE] text-[#1D4ED8] hover:bg-[#DBEAFE] dark:bg-blue-500/20 dark:text-blue-400 dark:hover:bg-blue-500/20">Perjalanan</Badge>;
-            case 'menunggu_nota': return <Badge className="rounded-full border-none shadow-none whitespace-nowrap bg-[#FEF3C7] text-[#B45309] hover:bg-[#FEF3C7] dark:bg-amber-500/20 dark:text-amber-400 dark:hover:bg-amber-500/20">Nota</Badge>;
-            case 'selesai': return <Badge className="rounded-full border-none shadow-none bg-[#FFE7E2] text-[#2B2E6B] hover:bg-[#FFE7E2] dark:bg-[#FF7E6B]/20 dark:text-[#FF9485] dark:hover:bg-[#FF7E6B]/20">Selesai</Badge>;
-            default: return <Badge className="rounded-full border-none shadow-none">{status || '-'}</Badge>;
+            case 'perjalanan':
+                return <span className="badge badge-info !bg-blue-100 !text-blue-700 !border-none">Perjalanan</span>;
+            case 'menunggu_nota':
+                return <span className="badge badge-warning !bg-yellow-100 !text-yellow-700 !border-none">Nota</span>;
+            case 'selesai':
+                return <span className="badge badge-success !bg-green-100 !text-green-700 !border-none">Selesai</span>;
+            default:
+                return <span className="badge badge-ghost">{status || '-'}</span>;
         }
     };
 
     return (
         <AppHeaderLayout>
             <Head title="Pengiriman TBS" />
-            <div className="flex h-full w-full flex-col gap-4 p-4 lg:p-6">
+            <div className="flex h-full w-full flex-col gap-4 p-4 lg:p-6" data-theme="light">
                 <div className="flex items-center justify-between">
                     <div>
                         <h1 className="text-2xl font-bold tracking-tight">{isPekerja ? 'Riwayat Perjalanan' : 'Pengiriman TBS'}</h1>
@@ -94,15 +93,15 @@ export default function PengirimanIndex({ pengiriman }: { pengiriman: Pengiriman
                     )}
                 </div>
 
-                <Card className="rounded-[20px] shadow-sm">
-                    <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="rounded-[20px] border border-base-300 bg-base-100 shadow-sm" data-theme="light">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 border-b border-base-300">
                         <div>
-                            <CardTitle>Daftar Pengiriman</CardTitle>
-                            <CardDescription>Menampilkan log perjalanan armada.</CardDescription>
+                            <h3 className="text-lg font-semibold text-base-content">Daftar Pengiriman</h3>
+                            <p className="text-sm text-base-content/70">Menampilkan log perjalanan armada.</p>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                             <div className="relative w-full sm:w-64">
-                                <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                                <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-base-content/50" />
                                 <Input
                                     type="text"
                                     placeholder="Cari plat, supir, atau blok..."
@@ -123,84 +122,72 @@ export default function PengirimanIndex({ pengiriman }: { pengiriman: Pengiriman
                                 </SelectContent>
                             </Select>
                         </div>
-                    </CardHeader>
-                    <CardContent>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Waktu</TableHead>
-                                    <TableHead>Armada</TableHead>
-                                    <TableHead>Asal Kebun</TableHead>
-                                    {!isPekerja && <TableHead>Supir</TableHead>}
-                                    <TableHead>Status</TableHead>
-                                    <TableHead>Netto (Kg)</TableHead>
-                                    <TableHead className="w-[100px]">Aksi</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
+                    </div>
+
+                    <div className="overflow-x-auto p-0">
+                        <table className="table table-zebra table-pin-rows !bg-base-100">
+                            <thead>
+                                <tr>
+                                    <th className="text-base-content/70 font-medium">Waktu</th>
+                                    <th className="text-base-content/70 font-medium">Armada</th>
+                                    <th className="text-base-content/70 font-medium">Asal Kebun</th>
+                                    {!isPekerja && <th className="text-base-content/70 font-medium">Supir</th>}
+                                    <th className="text-base-content/70 font-medium">Status</th>
+                                    <th className="text-base-content/70 font-medium">Netto (Kg)</th>
+                                    <th className="text-base-content/70 font-medium w-[100px]">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 {filteredPengiriman.length === 0 ? (
-                                    <TableRow>
-                                        <TableCell colSpan={isPekerja ? 6 : 7} className="h-24 text-center">
+                                    <tr>
+                                        <td colSpan={isPekerja ? 6 : 7} className="h-24 text-center text-base-content/50">
                                             {pengiriman.length === 0 ? 'Belum ada data pengiriman.' : 'Data pengiriman tidak ditemukan.'}
-                                        </TableCell>
-                                    </TableRow>
+                                        </td>
+                                    </tr>
                                 ) : (
                                     filteredPengiriman.map((item) => (
-                                        <TableRow key={item.id}>
-                                            <TableCell className="whitespace-nowrap">
+                                        <tr key={item.id} className="hover:bg-base-200/50">
+                                            <td className="whitespace-nowrap text-base-content">
                                                 {new Date(item.waktu_berangkat).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' })}
-                                            </TableCell>
-                                            <TableCell>
-                                                <div className="font-medium">{item.mobil?.nama_mobil}</div>
-                                                <div className="text-xs text-muted-foreground">{item.mobil?.plat_nomor}</div>
-                                            </TableCell>
-                                            <TableCell>{item.lahan?.nama_blok}</TableCell>
-                                            {!isPekerja && <TableCell>{item.pekerja?.name}</TableCell>}
-                                            <TableCell>{getStatusBadge(item.status)}</TableCell>
-                                            <TableCell>
+                                            </td>
+                                            <td>
+                                                <div className="font-medium text-base-content">{item.mobil?.nama_mobil}</div>
+                                                <div className="text-xs text-base-content/60">{item.mobil?.plat_nomor}</div>
+                                            </td>
+                                            <td className="text-base-content">{item.lahan?.nama_blok}</td>
+                                            {!isPekerja && <td className="text-base-content">{item.pekerja?.name}</td>}
+                                            <td>{getStatusBadge(item.status)}</td>
+                                            <td>
                                                 {item.berat_netto_kg ? (
                                                     <span className="font-bold text-[#F0654F]">{item.berat_netto_kg.toLocaleString('id-ID')}</span>
                                                 ) : (
-                                                    <span className="text-muted-foreground">-</span>
+                                                    <span className="text-base-content/40">-</span>
                                                 )}
-                                            </TableCell>
-                                            <TableCell>
+                                            </td>
+                                            <td>
                                                 <div className="flex items-center gap-2">
-                                                    {/* Tombol detail — semua role bisa lihat kalau sudah selesai */}
                                                     {item.status === 'selesai' && (
-                                                        <Button asChild variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" title="Lihat Detail">
-                                                            <Link href={`/pengiriman/${item.id}`}>
-                                                                <EyeIcon className="h-4 w-4" />
-                                                            </Link>
-                                                        </Button>
+                                                        <Link href={`/pengiriman/${item.id}`} className="btn btn-ghost btn-xs btn-square !text-blue-600 hover:!bg-blue-50">
+                                                            <EyeIcon className="h-4 w-4" />
+                                                        </Link>
                                                     )}
                                                     {!isPekerja && (
-                                                        <Button asChild variant="ghost" size="icon" className="h-8 w-8 text-blue-600 hover:text-blue-700" title="Edit Pengiriman">
-                                                            <Link href={`/pengiriman/${item.id}/edit`}>
-                                                                <EditIcon className="h-4 w-4" />
-                                                            </Link>
-                                                        </Button>
+                                                        <Link href={`/pengiriman/${item.id}/edit`} className="btn btn-ghost btn-xs btn-square !text-blue-600 hover:!bg-blue-50">
+                                                            <EditIcon className="h-4 w-4" />
+                                                        </Link>
                                                     )}
-
-                                                    {/* Tombol input berat untuk pekerja, hanya saat status perjalanan */}
                                                     {isPekerja && item.status === 'perjalanan' && (
-                                                        <Button asChild variant="outline" size="sm" className="h-8 border-[#FF7E6B]/40 text-[#FF7E6B] hover:bg-[#FFE7E2] hover:text-[#F0654F]" title="Input Berat Timbangan">
-                                                            <Link href={`/pengiriman/${item.id}/timbang`}>
-                                                                <ScaleIcon className="mr-1 h-3 w-3" />
-                                                                Input Berat
-                                                            </Link>
-                                                        </Button>
+                                                        <Link href={`/pengiriman/${item.id}/timbang`} className="btn btn-outline btn-xs border-[#FF7E6B]/40 text-[#FF7E6B] hover:bg-[#FFE7E2] hover:text-[#F0654F]">
+                                                            <ScaleIcon className="mr-1 h-3 w-3" />
+                                                            Input Berat
+                                                        </Link>
                                                     )}
-
                                                     {!isPemilik && !isPekerja && !item.nota && (
-                                                        <Button asChild variant="outline" size="sm" className="h-8 border-orange-200 text-orange-600 hover:bg-orange-50 hover:text-orange-700" title="Upload Nota">
-                                                            <Link href={`/nota/${item.id}/upload`}>
-                                                                <CameraIcon className="mr-1 h-3 w-3" />
-                                                                Nota
-                                                            </Link>
-                                                        </Button>
+                                                        <Link href={`/nota/${item.id}/upload`} className="btn btn-outline btn-xs border-orange-200 text-orange-600 hover:bg-orange-50 hover:text-orange-700">
+                                                            <CameraIcon className="mr-1 h-3 w-3" />
+                                                            Nota
+                                                        </Link>
                                                     )}
-
                                                     {(isPemilik || isPekerja) && (
                                                         <AlertDialog>
                                                             <AlertDialogTrigger asChild>
@@ -234,14 +221,14 @@ export default function PengirimanIndex({ pengiriman }: { pengiriman: Pengiriman
                                                         </AlertDialog>
                                                     )}
                                                 </div>
-                                            </TableCell>
-                                        </TableRow>
+                                            </td>
+                                        </tr>
                                     ))
                                 )}
-                            </TableBody>
-                        </Table>
-                    </CardContent>
-                </Card>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </AppHeaderLayout>
     );

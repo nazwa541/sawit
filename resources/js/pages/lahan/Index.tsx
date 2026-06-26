@@ -1,8 +1,6 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import AppHeaderLayout from '@/layouts/app/app-header-layout';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { PlusIcon, EditIcon, TrashIcon, SearchIcon } from 'lucide-react';
 import {
     AlertDialog,
@@ -18,7 +16,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
-import { usePage } from '@inertiajs/react';
 
 interface Lahan {
     id: number;
@@ -26,29 +23,33 @@ interface Lahan {
     luas_ha: number;
 }
 
-export default function LahanIndex({ lahans }: { lahans: Lahan[] }) {
+export default function LahanIndex() {
+    // Ambil data dari usePage
+    const { lahans, flash } = usePage<any>().props;
     const [searchQuery, setSearchQuery] = useState('');
 
-    const filteredLahans = lahans.filter(lahan =>
+    // Filter data (hanya untuk tampilan, pagination tetap dari backend)
+    const filteredLahans = lahans.data?.filter((lahan: Lahan) =>
         lahan.nama_blok.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    ) || [];
 
     const handleDelete = (id: number) => {
-
         router.delete(`/lahan/${id}`);
-
     };
-    const { flash } = usePage<any>().props;
 
     useEffect(() => {
         if (flash?.success) toast.success(flash.success);
         if (flash?.error) toast.error(flash.error);
     }, [flash]);
 
+    const handlePageChange = (page: number) => {
+        router.get('/lahan', { page, search: searchQuery });
+    };
+
     return (
         <AppHeaderLayout>
             <Head title="Manajemen Lahan" />
-            <div className="flex h-full w-full flex-col gap-4 p-4 lg:p-6">
+            <div className="flex h-full w-full flex-col gap-4 p-4 lg:p-6" data-theme="light">
                 <div className="flex items-center justify-between">
                     <div>
                         <h1 className="text-2xl font-bold tracking-tight">Blok Kebun</h1>
@@ -62,14 +63,14 @@ export default function LahanIndex({ lahans }: { lahans: Lahan[] }) {
                     </Button>
                 </div>
 
-                <Card className="rounded-[20px] shadow-sm">
-                    <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="rounded-[20px] border border-base-300 bg-base-100 shadow-sm" data-theme="light">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 border-b border-base-300">
                         <div>
-                            <CardTitle>Daftar Lahan</CardTitle>
-                            <CardDescription>Semua lahan yang terdaftar di sistem.</CardDescription>
+                            <h3 className="text-lg font-semibold text-base-content">Daftar Lahan</h3>
+                            <p className="text-sm text-base-content/70">Semua lahan yang terdaftar di sistem.</p>
                         </div>
                         <div className="relative w-full sm:w-72">
-                            <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                            <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-base-content/50" />
                             <Input
                                 type="text"
                                 placeholder="Cari nama blok..."
@@ -78,35 +79,37 @@ export default function LahanIndex({ lahans }: { lahans: Lahan[] }) {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                         </div>
-                    </CardHeader>
-                    <CardContent>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Nama Blok</TableHead>
-                                    <TableHead>Luas (Hektar)</TableHead>
-                                    <TableHead className="w-[100px]">Aksi</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
+                    </div>
+
+                    <div className="overflow-x-auto p-0">
+                        <table className="table table-zebra table-pin-rows !bg-base-100">
+                            <thead>
+                                <tr>
+                                    <th className="text-base-content/70 font-medium">Nama Blok</th>
+                                    <th className="text-base-content/70 font-medium">Luas (Hektar)</th>
+                                    <th className="text-base-content/70 font-medium w-[100px]">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 {filteredLahans.length === 0 ? (
-                                    <TableRow>
-                                        <TableCell colSpan={3} className="h-24 text-center">
-                                            {lahans.length === 0 ? 'Belum ada data lahan.' : 'Data lahan tidak ditemukan.'}
-                                        </TableCell>
-                                    </TableRow>
+                                    <tr>
+                                        <td colSpan={3} className="h-24 text-center text-base-content/50">
+                                            {lahans.data?.length === 0 ? 'Belum ada data lahan.' : 'Data lahan tidak ditemukan.'}
+                                        </td>
+                                    </tr>
                                 ) : (
-                                    filteredLahans.map((lahan) => (
-                                        <TableRow key={lahan.id}>
-                                            <TableCell className="font-medium">{lahan.nama_blok}</TableCell>
-                                            <TableCell>{lahan.luas_ha} ha</TableCell>
-                                            <TableCell>
+                                    filteredLahans.map((lahan: Lahan) => (
+                                        <tr key={lahan.id} className="hover:bg-base-200/50">
+                                            <td className="font-medium text-base-content">{lahan.nama_blok}</td>
+                                            <td className="text-base-content">{lahan.luas_ha} ha</td>
+                                            <td>
                                                 <div className="flex items-center gap-2">
-                                                    <Button asChild variant="ghost" size="icon" className="h-8 w-8 text-blue-600 hover:text-blue-700">
-                                                        <Link href={`/lahan/${lahan.id}/edit`}>
-                                                            <EditIcon className="h-4 w-4" />
-                                                        </Link>
-                                                    </Button>
+                                                    <Link
+                                                        href={`/lahan/${lahan.id}/edit`}
+                                                        className="btn btn-ghost btn-xs btn-square !text-blue-600 hover:!bg-blue-50"
+                                                    >
+                                                        <EditIcon className="h-4 w-4" />
+                                                    </Link>
                                                     <AlertDialog>
                                                         <AlertDialogTrigger asChild>
                                                             <Button
@@ -136,14 +139,41 @@ export default function LahanIndex({ lahans }: { lahans: Lahan[] }) {
                                                         </AlertDialogContent>
                                                     </AlertDialog>
                                                 </div>
-                                            </TableCell>
-                                        </TableRow>
+                                            </td>
+                                        </tr>
                                     ))
                                 )}
-                            </TableBody>
-                        </Table>
-                    </CardContent>
-                </Card>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {/* Pagination DaisyUI */}
+                    {lahans.links && lahans.links.length > 0 && (
+                        <div className="flex justify-center border-t border-base-300 py-4">
+                             <div className="join">
+                                {lahans.links.map((link: any, index: number) => {
+                                const isPrevious = link.label === '&laquo; Previous';
+                                const isNext = link.label === 'Next &raquo;';
+                                const isNumber = !isPrevious && !isNext;
+
+                                return (
+                                    <button
+                                    key={index}
+                                    className={`join-item btn btn-sm ${link.active ? 'btn-primary' : ''} ${isNumber ? 'min-w-[40px]' : 'px-4'}`}
+                                    onClick={() => {
+                                        if (link.url) {
+                                            const url = new URL(link.url);
+                                            const page = url.searchParams.get('page');
+                                            router.get('/lahan', { page: page || 1 });
+                                        }
+                                    }}
+                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                    disabled={!link.url}
+                    />           );
+                                 })}
+                             </div>
+                        </div>)}
+                </div>
             </div>
         </AppHeaderLayout>
     );

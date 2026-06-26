@@ -3,16 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Lahan\StoreLahanRequest;
+use App\Http\Requests\Lahan\UpdateLahanRequest;
 use App\Models\Lahan;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class LahanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // Ambil parameter pencarian dari query string
+        $search = $request->input('search');
+
+        // Query dengan pencarian (jika ada)
+        $query = Lahan::query();
+
+        if ($search) {
+            $query->where('nama_blok', 'like', "%{$search}%");
+        }
+
+        // Gunakan paginate(10) untuk 10 data per halaman
+        $lahans = $query->latest()->paginate(3);
+
+        // Jika ada parameter search, tambahkan ke pagination agar tetap terbawa
+        if ($search) {
+            $lahans->appends(['search' => $search]);
+        }
+
         return Inertia::render('lahan/Index', [
-            'lahans' => Lahan::latest()->get()
+            'lahans' => $lahans
         ]);
     }
 

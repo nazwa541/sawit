@@ -1,5 +1,6 @@
 import { Head, usePage, router } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
+import { type SharedData } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -21,8 +22,8 @@ interface PetugasRamDashboardProps {
 }
 
 export default function PetugasRamDashboard() {
-    const { menungguNota, notaHariIni, totalMenunggu, queueChart } =
-        usePage<{ props: PetugasRamDashboardProps }>().props as unknown as PetugasRamDashboardProps;
+    const { menungguNota, notaHariIni, totalMenunggu, queueChart, auth } =
+        usePage<{ props: PetugasRamDashboardProps } & SharedData>().props as unknown as PetugasRamDashboardProps & SharedData;
 
     const [search, setSearch] = useState('');
 
@@ -38,7 +39,7 @@ export default function PetugasRamDashboard() {
                 {/* Header & Search */}
                 <div className="flex flex-col gap-4">
                     <div>
-                        <h2 className="text-2xl font-bold tracking-tight">Halo, Petugas Timbangan!</h2>
+                        <h2 className="text-2xl font-bold tracking-tight">Selamat datang petugas RAM, {auth?.user?.name}</h2>
                         <p className="text-muted-foreground">Silakan cari plat nomor truk untuk mengunggah foto nota timbangan.</p>
                     </div>
 

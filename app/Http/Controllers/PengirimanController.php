@@ -43,8 +43,12 @@ class PengirimanController extends Controller
 
     public function create()
     {
+        $activeMobilIds = Pengiriman::whereIn('status', ['perjalanan', 'menunggu_nota'])
+            ->pluck('mobil_id')
+            ->toArray();
+
         return Inertia::render('pengiriman/Create', [
-            'mobils' => Mobil::orderBy('nama_mobil')->get(),
+            'mobils' => Mobil::whereNotIn('id', $activeMobilIds)->orderBy('nama_mobil')->get(),
             'lahans' => Lahan::orderBy('nama_blok')->get(),
         ]);
     }
@@ -68,9 +72,14 @@ class PengirimanController extends Controller
 
     public function edit(Pengiriman $pengiriman)
     {
+        $activeMobilIds = Pengiriman::whereIn('status', ['perjalanan', 'menunggu_nota'])
+            ->where('id', '!=', $pengiriman->id)
+            ->pluck('mobil_id')
+            ->toArray();
+
         return Inertia::render('pengiriman/Edit', [
             'pengiriman' => $pengiriman,
-            'mobils' => Mobil::orderBy('nama_mobil')->get(),
+            'mobils' => Mobil::whereNotIn('id', $activeMobilIds)->orderBy('nama_mobil')->get(),
             'lahans' => Lahan::orderBy('nama_blok')->get(),
         ]);
     }

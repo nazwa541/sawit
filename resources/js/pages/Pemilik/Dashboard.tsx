@@ -1,5 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
+import { type BreadcrumbItem, type SharedData } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import { DashboardStats } from '@/components/dashboard/Pemilik/stats';
 import { ProductionVolumeChart } from '@/components/dashboard/Pemilik/conversation-volume-chart';
@@ -37,8 +37,8 @@ export interface PemilikDashboardProps {
 }
 
 export default function Dashboard() {
-    const { stats, pieChart, produksiChart, pengirimanTerbaru } =
-        usePage<{ props: PemilikDashboardProps }>().props as unknown as PemilikDashboardProps;
+    const { stats, pieChart, produksiChart, pengirimanTerbaru, auth } =
+        usePage<{ props: PemilikDashboardProps } & SharedData>().props as unknown as PemilikDashboardProps & SharedData;
 
     // State untuk animasi rotasi teks
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -76,6 +76,12 @@ export default function Dashboard() {
                             </span>
                         </span>
                     </span>
+                </div>
+
+                {/* Sapaan Selamat Datang dari Upstream */}
+                <div className="flex flex-col gap-1">
+                    <h2 className="text-2xl font-bold tracking-tight">Selamat datang pemilik kebun, {auth?.user?.name}</h2>
+                    <p className="text-muted-foreground">Kelola data lahan, mobil, dan lihat laporan pengiriman kelapa sawit Anda.</p>
                 </div>
 
                 {/* Stat cards */}

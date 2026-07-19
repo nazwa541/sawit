@@ -64,7 +64,7 @@ export default function PekerjaDashboard() {
 
                 <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                     <div>
-                        <h2 className="text-2xl font-bold tracking-tight">Halo, {namaUser}!</h2>
+                        <h2 className="text-2xl font-bold tracking-tight">Selamat datang supir, {auth?.user?.name}</h2>
                         <p className="text-muted-foreground">Kelola pengiriman dan riwayat perjalanan Anda hari ini.</p>
                     </div>
                     <Button

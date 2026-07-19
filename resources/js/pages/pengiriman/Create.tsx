@@ -79,19 +79,19 @@ export default function PengirimanCreate({ mobils, lahans }: { mobils: any[], la
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="waktu_berangkat">Waktu Keberangkatan</Label>
-                                    <Input 
-                                        id="waktu_berangkat" 
+                                    <Input
+                                        id="waktu_berangkat"
                                         type="datetime-local"
-                                        value={data.waktu_berangkat} 
-                                        onChange={(e) => setData('waktu_berangkat', e.target.value)} 
-                                        required 
+                                        value={data.waktu_berangkat}
+                                        onChange={(e) => setData('waktu_berangkat', e.target.value)}
+                                        required
                                     />
                                     <InputError message={errors.waktu_berangkat} />
                                 </div>
                             </CardContent>
                             <CardFooter className="flex justify-end border-t p-6">
-                                <Button 
-                                    type="submit" 
+                                <Button
+                                    type="submit"
                                     className="bg-[#FF7E6B] hover:bg-[#FF9485]"
                                     disabled={processing}
                                 >

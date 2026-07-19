@@ -23,15 +23,33 @@ class OtpController extends Controller
 
         Cache::put("otp_{$phone}", $otp, now()->addMinutes(5));
 
-        $response = Http::withHeaders([
-            'Authorization' => env('FONNTE_TOKEN'),
-        ])->post('https://api.fonnte.com/send', [
+        $response = Http::withoutVerifying()
+            ->withHeaders([
+                'Authorization' => env('FONNTE_TOKEN'),
+            ])->post('https://api.fonnte.com/send', [
             'target'  => $phone,
             'message' => "Kode OTP Anda: *{$otp}*\n\nJangan berikan kode ini kepada siapapun. Berlaku 5 menit.",
         ]);
 
+        Log::info('Fonnte Send OTP', [
+            'phone'    => $phone,
+            'status'   => $response->status(),
+            'body'     => $response->body(),
+        ]);
+
         if ($response->failed()) {
-            return response()->json(['error' => 'Gagal mengirim OTP. Coba lagi.'], 500);
+            return response()->json([
+                'error'  => 'Gagal mengirim OTP. Coba lagi.',
+                'detail' => $response->json('reason') ?? $response->body(),
+            ], 500);
+        }
+
+        $body = $response->json();
+        if (isset($body['status']) && $body['status'] === false) {
+            return response()->json([
+                'error'  => 'Gagal mengirim OTP. Coba lagi.',
+                'detail' => $body['reason'] ?? 'Unknown error from Fonnte',
+            ], 500);
         }
 
         return response()->json(['message' => 'OTP berhasil dikirim ke WhatsApp Anda.']);

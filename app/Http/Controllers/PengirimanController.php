@@ -21,7 +21,7 @@ class PengirimanController extends Controller
 
         $query = Pengiriman::with(['mobil', 'lahan', 'pekerja', 'nota'])->latest();
 
-        if ($user->role !== 'pemilik') {
+        if ($user->role !== 'pekerja') {
             $query->where('pekerja_id', $user->id);
         }
 
